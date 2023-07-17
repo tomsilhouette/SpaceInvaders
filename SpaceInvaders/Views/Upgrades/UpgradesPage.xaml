@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SpaceInvaders.Views.Upgrades.UpgradesPage"
+             Title="UpgradesPage">
+    <VerticalStackLayout>
+        
+        <Label 
+            Text="UPGRADES"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="22"
+            FontAttributes="Bold"
+            Margin="0,25,0,10"/>
+        
+        <Label 
+            Text="Points means prizes"
+            Margin="0,5,0,25"
+            FontSize="18"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"/>
+        
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="25">
+            
+            <Button
+                x:Name="BuyLaserButton"
+                Text="Laser"
+                WidthRequest="140"
+                SemanticProperties.Hint="Buy one laser round"
+                Clicked="BuyLaserButton_Clicked"
+                HorizontalOptions="Center" />
+
+            <Button
+                x:Name="BuyLifeButton"
+                Text="Life"
+                WidthRequest="140"
+                SemanticProperties.Hint="Buy one extra life"
+                Clicked="BuyLifeButton_Clicked"
+                HorizontalOptions="Center" />
+
+            
+
+        </HorizontalStackLayout>
+            
+        <HorizontalStackLayout HorizontalOptions="Center">
+            
+            <Button
+                x:Name="BackToPage"
+                Text="Go Back"
+                WidthRequest="140"
+                SemanticProperties.Hint="Go back to previous page"
+                Clicked="BackToPage_Clicked"
+                HorizontalOptions="Center"
+                Margin="0,25,0,0"
+                />
+            
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

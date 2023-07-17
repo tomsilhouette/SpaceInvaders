@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SpaceInvaders"
+             xmlns:viewModels="clr-namespace:SpaceInvaders.ViewModel"
+             x:Class="SpaceInvaders.MainPage">
+    <ContentPage.BindingContext>
+        <viewModels:MainPageViewModel />
+    </ContentPage.BindingContext>
+    
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <Image
+                Source="space_invader1.png"
+                SemanticProperties.Description="Dont get caught"
+                HeightRequest="300"
+                HorizontalOptions="Center" />
+
+
+            <Label
+                Text="Welcome To Space Invaders!"
+                SemanticProperties.Description="Welcome To Space Invaders!"
+                FontSize="18"
+                HorizontalOptions="Center" />
+
+            <Button
+                x:Name="StartButton"
+                Text="Start Game"
+                SemanticProperties.Hint="Start the game"
+                Clicked="StartButton_Clicked"
+                HorizontalOptions="Center" />
+
+
+        <VerticalStackLayout Margin="0,25,0,0">
+            
+            <Label
+                Text="High Score"
+                SemanticProperties.Description="Whats the highscore"
+                FontSize="18"
+                HorizontalOptions="Center" />
+    
+            <Label
+                Text="{Binding HighScorePlayerName}"
+                x:Name="highScore_name"
+                SemanticProperties.Description="Who the top scorer"
+                FontSize="18"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="{Binding HighestScore}"
+                x:Name="highScore_score"
+                SemanticProperties.Description="The Score"
+                FontSize="22"
+                HorizontalOptions="Center" />
+
+            <Button
+                x:Name="ShowHighScores"
+                Text="HighScores"
+                Margin="0,10,0,0"
+                SemanticProperties.Hint="Display HighScores"
+                Clicked="ShowHighScores_Clicked"
+                HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+
+    </VerticalStackLayout>
+
+</ContentPage>

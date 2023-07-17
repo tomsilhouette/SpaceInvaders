@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SpaceInvaders.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SpaceInvaders"
+    xmlns:game="clr-namespace:SpaceInvaders.Views.Game"
+    xmlns:gameover="clr-namespace:SpaceInvaders.Views.GameOver"
+    xmlns:scores="clr-namespace:SpaceInvaders.Views.HighScores"
+    xmlns:levelComplete="clr-namespace:SpaceInvaders.Views.LevelComplete"
+    xmlns:upgrades="clr-namespace:SpaceInvaders.Views.Upgrades"
+    Shell.FlyoutBehavior="Disabled">
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+
+    <ShellContent
+        Title="Game"
+        ContentTemplate="{DataTemplate game:GamePage}"
+        Route="GamePage" />
+    
+    <ShellContent
+        Title="HighScores"
+        ContentTemplate="{DataTemplate scores:HighScoresPage}"
+        Route="HighScoresPage" />
+
+    <ShellContent
+        Title="LevelComplete"
+        ContentTemplate="{DataTemplate levelComplete:LevelCompletePage}"
+        Route="LevelCompletePage" />
+
+    <ShellContent
+        Title="Upgrades"
+        ContentTemplate="{DataTemplate upgrades:UpgradesPage}"
+        Route="UpgradesPage" />
+
+    <ShellContent
+        Title="GameOver"
+        ContentTemplate="{DataTemplate gameover:GameOverPage}"
+        Route="GameOverPage" />
+
+</Shell>

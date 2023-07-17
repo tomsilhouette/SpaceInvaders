@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SpaceInvaders.Views.GameOver.GameOverPage"
+             Title="Game Over Page">
+    <VerticalStackLayout VerticalOptions="Center">
+
+        <Label 
+            Text="GAME OVER!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="44"
+            FontAttributes="Bold"/>
+
+        <Label 
+            Text="Final Score"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="22"/>
+        
+        <Label 
+            Text="1.7"
+            x:Name="FinalScoreContainer"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="44"/>
+
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <!-- Adds highscore inputs -->
+            <Entry x:Name="highscoreInput" IsVisible="false" Placeholder="Enter Name..."/>
+        </HorizontalStackLayout>
+        
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,25,0,0">
+            
+            <Button
+                x:Name="HomeButton"
+                Text="Home"
+                WidthRequest="140"
+                SemanticProperties.Hint="Back to welcome screen"
+                Clicked="HomeButton_Clicked"
+                HorizontalOptions="Center" />
+            
+            <Button
+                x:Name="NewGameButton"
+                Text="New Game"
+                WidthRequest="140"
+                SemanticProperties.Hint="Start a new game"
+                Clicked="NewGameButton_Clicked"
+                HorizontalOptions="Center" />
+            
+        </HorizontalStackLayout>
+        
+    </VerticalStackLayout>
+</ContentPage>

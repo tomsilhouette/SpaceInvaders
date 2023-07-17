@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SpaceInvaders.Views.Game.GamePage"
+             xmlns:local="clr-namespace:SpaceInvaders"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+             xmlns:viewModels="clr-namespace:SpaceInvaders.ViewModel"
+             Title="Game Page from XAML">
+    
+    <Grid RowDefinitions="*" >
+        <skia:SKCanvasView Grid.Row="0" x:Name="canvasView" 
+                PaintSurface="OnPaintSurface"
+                >
+        </skia:SKCanvasView>
+
+        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,10" Spacing="25">
+            
+            <Button
+                    x:Name="LeftButton"
+                    Text="Left"
+                    Clicked="LeftButton_Clicked"
+                    SemanticProperties.Hint="Go Left"
+                    WidthRequest="100"
+                    HeightRequest="50"
+                    HorizontalOptions="Center" />
+            
+            <Button
+                    x:Name="FireButton"
+                    Text="Fire"
+                    Clicked="FireButton_Clicked"
+                    SemanticProperties.Hint="Fire Weapons"
+                    WidthRequest="100"
+                    HeightRequest="50"
+                    HorizontalOptions="Center" />
+
+            <Button
+                    x:Name="RightButton"
+                    Text="Right"
+                    Clicked="RightButton_Clicked"
+                    SemanticProperties.Hint="Go Right"
+                    WidthRequest="100"
+                    HeightRequest="50"
+                    HorizontalOptions="Center" />
+            
+        </HorizontalStackLayout>
+
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            
+            <Label
+                Text="{Binding CurrentScore, StringFormat='Score: {0}'}}"
+                TextColor="White"
+                x:Name="scoreContainer"
+                SemanticProperties.Description="Current score"
+                FontSize="32"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+            
+        </StackLayout>
+
+        
+    </Grid>
+</ContentPage>
