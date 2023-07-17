@@ -9,8 +9,12 @@ namespace SpaceInvaders.ViewModel
 {
     class HighScoresViewModel : ObservableObject
     {
-/*        public List<HighScoreRecord> HighScoresList { get; set; } = new List<HighScoreRecord>();
-        public record HighScoreRecord(string Name, int Score);*/
+        public List<HighScoreRecord> HighScoresList { get; set; } = new List<HighScoreRecord>();
+        public record HighScoreRecord(string Name, int Score);
 
+        public HighScoresViewModel(GameState state)
+        {
+
+        }
     }
 }
