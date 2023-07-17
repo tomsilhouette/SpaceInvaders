@@ -15,12 +15,13 @@
 
             <Image
                 Source="space_invader1.png"
+                x:Name="LogoImage"
                 SemanticProperties.Description="Dont get caught"
-                HeightRequest="300"
                 HorizontalOptions="Center" />
 
+        <Image Source="space_invader1.png" WidthRequest="200" HeightRequest="200" />
 
-            <Label
+        <Label
                 Text="Welcome To Space Invaders!"
                 SemanticProperties.Description="Welcome To Space Invaders!"
                 FontSize="18"
@@ -43,14 +44,14 @@
                 HorizontalOptions="Center" />
     
             <Label
-                Text="{Binding HighScorePlayerName}"
+                Text="Player Name"
                 x:Name="highScore_name"
                 SemanticProperties.Description="Who the top scorer"
                 FontSize="18"
                 HorizontalOptions="Center" />
 
             <Label
-                Text="{Binding HighestScore}"
+                Text="1000"
                 x:Name="highScore_score"
                 SemanticProperties.Description="The Score"
                 FontSize="22"

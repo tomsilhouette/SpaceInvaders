@@ -171,8 +171,8 @@ namespace SpaceInvaders.ViewModel
                         if (alienRect.Contains(boltPos))
                         {
                             aliensToRemove.Add(alien);
-/*                            killBoltsToRemove.Add(bolt);
-*/                        }
+                            killBoltsToRemove.Add(bolt);
+                        }
                     }
 
                 }
@@ -184,10 +184,10 @@ namespace SpaceInvaders.ViewModel
                     CurrentScore += alienToRemove.ScorePerKill;
                 }
 
-                /*foreach (Bolt boltToRemove in killBoltsToRemove)
+                foreach (Bolt boltToRemove in killBoltsToRemove)
                 {
                     BoltsFired.Remove(boltToRemove);
-                }*/
+                }
 
                 if (BoltsFired.Count > 0)
                 {

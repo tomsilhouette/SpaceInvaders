@@ -39,8 +39,8 @@ public partial class MainPage : ContentPage
 
     private async void StartButton_Clicked(object sender, EventArgs e)
     {
-/*        var startingSound = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("Resources/Audio/shoot.wav"));
-        startingSound.Play();*/
+        var startingSound = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("Resources/Audio/shoot.wav"));
+        startingSound.Play();
         await AppShell.Current.GoToAsync("///GamePage");
 
     }

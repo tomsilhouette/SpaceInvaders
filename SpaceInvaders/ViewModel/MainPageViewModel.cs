@@ -8,10 +8,5 @@ namespace SpaceInvaders.ViewModel
         public string HighScorePlayerName { get; set; } = "Win-man";
 
         public MainPageViewModel() { }
-
-        public MainPageViewModel(GameState state)
-        {
-
-        }
     }
 }

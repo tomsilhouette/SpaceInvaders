@@ -27,14 +27,15 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton(AudioManager.Current);
 		builder.Services.AddSingleton<GameState>();
+		builder.Services.AddSingleton<Player.Player>();
 		builder.Services.AddSingleton<MainPage>();
 		builder.Services.AddSingleton<GamePage>();
+		builder.Services.AddTransient<HighScoresPage>();
 		builder.Services.AddSingleton<LevelCompletePage>();
 		builder.Services.AddSingleton<UpgradesPage>();
 		builder.Services.AddSingleton<GameOverPage>();
 		builder.Services.AddSingleton<GameViewModel>();
-		builder.Services.AddSingleton<Player.Player>();
-		// builder.Services.AddTransient<HighScoresPage>();
+		builder.Services.AddSingleton<HighScoresViewModel>();
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif

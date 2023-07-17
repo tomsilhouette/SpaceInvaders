@@ -75,18 +75,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <AndroidAsset Include="Resources\Audio\explosion.wav">
+	  <MauiAsset Include="Resources\Audio\explosion.wav">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidAsset>
-	  <AndroidAsset Include="Resources\Audio\invaderkilled.wav">
+	  </MauiAsset>
+	  <MauiAsset Include="Resources\Audio\invaderkilled.wav">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </AndroidAsset>
-		<AndroidAsset Include="Resources\Audio\main_music.mpeg">
+	  </MauiAsset>
+		<MauiAsset Include="Resources\Audio\main_music.mpeg">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</AndroidAsset>
-		<EmbeddedResource Include="Resources\Audio\shoot.wav">
+		</MauiAsset>
+		<MauiAsset Include="Resources\Audio\shoot.wav">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</EmbeddedResource>
+		</MauiAsset>
 		<EmbeddedResource Include="Resources\Images\barrier.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
@@ -99,9 +99,9 @@
 		<EmbeddedResource Include="Resources\Images\heart.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Images\space_invader1.png">
+		<MauiAsset Include="Resources\Images\space_invader1.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</EmbeddedResource>
+		</MauiAsset>
 		<EmbeddedResource Include="Resources\Images\tnt.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
