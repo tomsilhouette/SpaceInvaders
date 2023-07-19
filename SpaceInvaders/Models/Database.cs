@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,8 +15,10 @@ namespace SpaceInvaders.Models
     {
         public List<User> HighScoresList { get; set; } = new();
 
-        public Database() { }
-
+        public Database() 
+        {
+            HighScoresList.Add(new User("Tommmm7", 44));
+        }
 
         public async Task GetHighScoreRequest()
         {

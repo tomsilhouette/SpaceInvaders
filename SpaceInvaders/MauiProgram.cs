@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Plugin.Maui.Audio;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using SpaceInvaders.Levels;
 using SpaceInvaders.Models;
 using SpaceInvaders.ViewModel;
 using SpaceInvaders.Views.Game;
@@ -40,6 +41,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<HighScoresViewModel>();
 		builder.Services.AddSingleton<MainPageViewModel>();
 		builder.Services.AddSingleton<Database>();
+		builder.Services.AddSingleton<BackgroundGenerator>();
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif

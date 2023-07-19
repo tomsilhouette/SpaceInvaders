@@ -26,8 +26,7 @@ public partial class MainPage : ContentPage
 
     protected override void OnAppearing()
     {
-        Debug.WriteLine("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-
+        Debug.WriteLine("OOOONNNNNNN APPPPEAAARRRRIIING");
         _ = Task.Run(vm.Initialise);
 
         // Check music is not already playing on page loading
