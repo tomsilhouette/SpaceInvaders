@@ -37,7 +37,7 @@ public partial class GamePage : ContentPage
 
     protected override void OnDisappearing()
     {
-        ViewModel.StopGame();
+        // init
     }
 
     // Init canvas
@@ -56,7 +56,7 @@ public partial class GamePage : ContentPage
     // Draw background
     private void DrawBackground(SKCanvas canvas, SKPoint start, SKPoint end)
     {
-        if (LevelBackgrounds.ElementAtOrDefault(ViewModel.State.currentLevel) is ILevelBackground background)
+        if (LevelBackgrounds.ElementAtOrDefault(ViewModel.State.CurrentLevel) is ILevelBackground background)
         {
             background.Draw(canvas, start, end);
         }

@@ -19,9 +19,8 @@ namespace SpaceInvaders.ViewModel
         [ObservableProperty]
         private int currentScore;
 
-        // Init player
         public Player.Player player = new Player.Player();
-        public SKPaint paintCom { get; set; }
+        public SKPaint PaintCom { get; set; }
 
         private readonly string imageSource = "SpaceInvaders.Resources.Images.";
 
@@ -46,7 +45,7 @@ namespace SpaceInvaders.ViewModel
         private void SetTimer()
         {
             // Create a timer with a two second interval.
-            aTimer = new Timer(TimeSpan.FromMilliseconds(16.0f));
+            aTimer = new Timer(TimeSpan.FromMilliseconds(32.0f));
 
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += OnTimedEvent;
@@ -58,26 +57,26 @@ namespace SpaceInvaders.ViewModel
         {
             TickEvent?.Invoke(this, EventArgs.Empty);
 
-            if (!State.isPlaying)
+            if (!State.IsPlaying)
             {
                 aTimer.Stop();
 
-                // Set final score and reset
-                State.endOfLevelScore = CurrentScore;
-                State.finishingScore += State.endOfLevelScore;
-
-                CurrentScore = 0;
 
                 player.playerXcord = 500;
                 player.playerYcord = 1750;
 
                 if (EnemyAlienGrid.Count > 0) 
-                {               
+                {
+                    State.FinishingScore += CurrentScore;
+
                     Shell.Current.GoToAsync("///GameOverPage");
                 }
 
                 if (EnemyAlienGrid.Count == 0)
                 {
+                    State.FinishingScore += CurrentScore;
+                    State.EndOfLevelScore = CurrentScore;
+
                     Shell.Current.GoToAsync("///LevelCompletePage");
                 }
             }
@@ -85,7 +84,7 @@ namespace SpaceInvaders.ViewModel
 
         internal void StartGame()
         {
-            State.isPlaying = true;
+            State.IsPlaying = true;
 
             // Add player
             using var playerStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}{player.playerImagePath}");
@@ -96,6 +95,7 @@ namespace SpaceInvaders.ViewModel
             SetTimer();
         }
 
+        // Draws every tick of the timer
         internal void DrawGame(SKCanvas gameCanvas)
         {
             // Draw the image on the canvas
@@ -109,22 +109,23 @@ namespace SpaceInvaders.ViewModel
             if (EnemyAlienGrid.Count == 0)
             {
                 // WIN GAME CONDITIONS
-                BoltsFired.Clear();
-                
-                StopGame();
 
-            } else {
+                BoltsFired.Clear();
+                State.IsPlaying = false;
+            }
+            else {
 
                 List<Alien> aliensToRemove = new List<Alien>();
                 List<Bolt> killBoltsToRemove = new List<Bolt>();
 
                 foreach (Alien alien in EnemyAlienGrid)
                 {
-                    if (alien.Y == player.playerYcord)
+                    if (alien.Y >= player.playerYcord)
                     {
                         // LOSING CONDITIONS
                         killBoltsToRemove.Clear();
-                        StopGame();
+                        BoltsFired.Clear();
+                        State.IsPlaying = false;
                     }
 
                     if (DirectionLeft)
@@ -133,22 +134,21 @@ namespace SpaceInvaders.ViewModel
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
-                                alien2.Y += 10;
+                                alien2.Y += 200;
                             }
                             DirectionLeft = false;
                         }
                         alien.X += 5;
-                    }
 
-                    if (!DirectionLeft)
-                    {
+                    } else {
+
                         alien.X -= 5;
 
                         if (alien.X <= 0)
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
-                                alien2.Y += 10;
+                                alien2.Y += 200;
                             }
                             DirectionLeft = true;
                         }
@@ -158,7 +158,7 @@ namespace SpaceInvaders.ViewModel
                     gameCanvas.DrawBitmap(enemyAlienBitmap, alienPos, new SKPaint());
 
 
-                    var alienRect = mat.Invert().MapRect(new SKRect(alien.X, alien.Y, alien.X + 100, alien.Y + 100));
+                    var alienRect = mat.Invert().MapRect(new SKRect(alien.X, alien.Y, alien.X + 120, alien.Y + 100));
                     gameCanvas.DrawRect(alienRect, new SKPaint()
                     {
                         IsStroke = true,
@@ -221,21 +221,19 @@ namespace SpaceInvaders.ViewModel
             }
         }
 
-        internal void StopGame()
-        {
-            State.isPlaying = false;
-        }
-
+        // Runs start of each level
         internal void CreateGameAnimations()
         {
+            CurrentScore = 0;
+
             int currentAlienYCord = 100;
             int currentAlienXCord = 5;
 
-            for (int i = 0; i < State.numberOfRowsOfEnemies; i++)
+            for (int i = 0; i < State.NumberOfRowsOfEnemies; i++)
             {
-                currentAlienXCord = 1;
+                currentAlienXCord = 5;
 
-                for (int j = 0; j < State.numberOfEnemiesPerRow; j++)
+                for (int j = 0; j < State.NumberOfEnemiesPerRow; j++)
                 {
                     EnemyAlienGrid.Add(new Alien(enemyAlienCount, currentAlienXCord, currentAlienYCord));
                     enemyAlienCount++;

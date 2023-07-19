@@ -1,12 +1,29 @@
-﻿using System.Diagnostics;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SpaceInvaders.Models;
+using System.Diagnostics;
 
 namespace SpaceInvaders.ViewModel
 {
-    public class MainPageViewModel
+    public partial class MainPageViewModel : ObservableObject
     {
-        public int HighestScore { get; set; } = 3141222;
-        public string HighScorePlayerName { get; set; } = "Win-man";
+        [ObservableProperty]
+        private int highscore;
 
-        public MainPageViewModel() { }
+        public Database Database { get; set; }
+
+        public MainPageViewModel(Database database)
+        {
+            Database = database;
+        }
+
+        public MainPageViewModel()
+        {
+
+        }
+
+        public async Task Initialise()
+        {
+            await Database.GetHighScoreRequest();
+        }
     }
 }

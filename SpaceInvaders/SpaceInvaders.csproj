@@ -42,9 +42,7 @@
 		<MauiImage Remove="Resources\Images\barrier.png" />
 		<MauiImage Remove="Resources\Images\enemyAlien.png" />
 		<MauiImage Remove="Resources\Images\enemyShip.png" />
-		<MauiImage Remove="Resources\Images\heart.png" />
 		<MauiImage Remove="Resources\Images\player.png" />
-		<MauiImage Remove="Resources\Images\space_invader1.png" />
 		<MauiImage Remove="Resources\Images\tnt.png" />
 
 		<!-- Custom Fonts -->
@@ -69,6 +67,7 @@
 	  <None Remove="Resources\Images\enemyAlien.png" />
 	  <None Remove="Resources\Images\enemyShip.png" />
 	  <None Remove="Resources\Images\heart.png" />
+	  <None Remove="Resources\Images\laser.png" />
 	  <None Remove="Resources\Images\player.png" />
 	  <None Remove="Resources\Images\space_invader1.png" />
 	  <None Remove="Resources\Images\tnt.png" />
@@ -96,12 +95,6 @@
 		<EmbeddedResource Include="Resources\Images\enemyShip.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Images\heart.png">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</EmbeddedResource>
-		<MauiAsset Include="Resources\Images\space_invader1.png">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</MauiAsset>
 		<EmbeddedResource Include="Resources\Images\tnt.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
@@ -110,16 +103,30 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Plugin.Maui.Audio" Version="1.0.0" />
 		<PackageReference Include="SkiaSharp" Version="2.88.4-preview.84" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.4-preview.84" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Core" Version="2.88.4-preview.84" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <EmbeddedResource Include="Resources\Images\player.png">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Update="Resources\Images\heart.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </MauiImage>
+	  <MauiImage Update="Resources\Images\laser.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </MauiImage>
+	  <MauiImage Update="Resources\Images\space_invader1.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </MauiImage>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -139,5 +146,7 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionSpaceInvadersHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>

@@ -11,14 +11,25 @@ namespace SpaceInvaders.Levels
     {
         public void Draw(SKCanvas canvas, SKPoint start, SKPoint end)
         {
-            // create the shader
-            var shader = SKShader.CreatePerlinNoiseFractalNoise(0.5f, 0.5f, 4, 0);
+            var colors = new SKColor[] {
+                    new SKColor(0, 0, 0),
+                    new SKColor(255, 0, 0)
+                };
 
-            // use the shader
+            var shader = SKShader.CreateTwoPointConicalGradient(
+                new SKPoint(start.X, start.Y),
+                128,
+                new SKPoint(end.X, end.Y),
+                16,
+                colors,
+                null,
+                SKShaderTileMode.Clamp);
+
             var paint = new SKPaint
             {
                 Shader = shader
             };
+
             canvas.DrawPaint(paint);
         }
     }

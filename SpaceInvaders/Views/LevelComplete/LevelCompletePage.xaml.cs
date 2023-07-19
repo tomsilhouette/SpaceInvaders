@@ -9,11 +9,14 @@ public partial class LevelCompletePage : ContentPage
     public LevelCompletePage(GameState state)
 	{
         State = state;
-
 		InitializeComponent();
-
-        LevelScoreContainer.Text = State.endOfLevelScore.ToString();
 	}
+
+    protected override void OnAppearing()
+    {
+        LevelScoreContainer.Text = State.EndOfLevelScore.ToString();
+        LevelTotalScoreContainer.Text = State.FinishingScore.ToString();
+    }
 
     private async void UpgradesButton_Clicked(object sender, EventArgs e)
     {
@@ -22,7 +25,8 @@ public partial class LevelCompletePage : ContentPage
 
     private async void NextLevelButton_Clicked(object sender, EventArgs e)
     {
-        State.currentLevel++;
+        State.EndOfLevelScore = 0;
+        State.CurrentLevel++;
         await AppShell.Current.GoToAsync("///GamePage");
     }
 }

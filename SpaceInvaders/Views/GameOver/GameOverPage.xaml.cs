@@ -13,10 +13,9 @@ public partial class GameOverPage : ContentPage
 
         InitializeComponent();
 
-        FinalScoreContainer.Text = State.finishingScore.ToString();
-        State.currentLevel = 1;
+        FinalScoreContainer.Text = State.FinishingScore.ToString();
 
-        if (State.finishingScore > 100)
+        if (State.FinishingScore > 100)
         {
             // Highscores
         }
@@ -24,6 +23,7 @@ public partial class GameOverPage : ContentPage
 
     private async void HomeButton_Clicked(object sender, EventArgs e)
     {
+        ResetGame();
         await AppShell.Current.GoToAsync("///MainPage");
     }
 
@@ -31,5 +31,10 @@ public partial class GameOverPage : ContentPage
     {
         await AppShell.Current.GoToAsync("///GamePage");
 
+    }
+
+    private void ResetGame()
+    {
+        State.CurrentLevel = 0;
     }
 }

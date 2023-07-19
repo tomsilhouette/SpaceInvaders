@@ -1,5 +1,7 @@
 ﻿using Plugin.Maui.Audio;
+using SpaceInvaders.Models;
 using SpaceInvaders.ViewModel;
+using System.Diagnostics;
 
 namespace SpaceInvaders;
 
@@ -13,6 +15,7 @@ public partial class MainPage : ContentPage
 
     private MainPageViewModel vm;
 
+
     public MainPage(IAudioManager audioManager)
 	{
 		InitializeComponent();
@@ -23,6 +26,10 @@ public partial class MainPage : ContentPage
 
     protected override void OnAppearing()
     {
+        Debug.WriteLine("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+
+        _ = Task.Run(vm.Initialise);
+
         // Check music is not already playing on page loading
         // Otherwise it will play multiple times at once
         if (!isMainMusicPlaying)
@@ -34,7 +41,6 @@ public partial class MainPage : ContentPage
                 isMainMusicPlaying = true;
             });
         }
-
     }
 
     private async void StartButton_Clicked(object sender, EventArgs e)
@@ -42,7 +48,6 @@ public partial class MainPage : ContentPage
         var startingSound = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("Resources/Audio/shoot.wav"));
         startingSound.Play();
         await AppShell.Current.GoToAsync("///GamePage");
-
     }
 
     private async void ShowHighScores_Clicked(object sender, EventArgs e)
@@ -50,6 +55,11 @@ public partial class MainPage : ContentPage
         var highScoreSound = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("Resources/Audio/explosion.wav"));
         highScoreSound.Play();
         await AppShell.Current.GoToAsync("///HighScoresPage");
+    }
+
+    private async void Upgrades_Clicked(object sender, EventArgs e)
+    {
+        await AppShell.Current.GoToAsync("///UpgradesPage");
     }
 }
 

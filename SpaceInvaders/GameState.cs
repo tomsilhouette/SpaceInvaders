@@ -6,17 +6,18 @@ namespace SpaceInvaders
     public class GameState
     {
         // Game Set up
-        public int numberOfEnemiesPerRow { get; } = 6;
-        public int numberOfRowsOfEnemies { get; } = 6;
-        public int startingEnemySpeed { get; set; } = 1;
-        public int currentLevel { get; set; } = 0;
+        public int NumberOfEnemiesPerRow { get; } = 2;
+        public int NumberOfRowsOfEnemies { get; } = 2;
+        public int StartingEnemySpeed { get; set; } = 1;
+        public int CurrentLevel { get; set; } = 0;
+        public int FinishLevel { get; set; } = 0;
 
         // Game in progress? 
-        public bool isPlaying { get; set; }
-        public bool gameOver { get; set; } = false;
+        public bool IsPlaying { get; set; } = false;
+        public bool GameOver { get; set; } = false;
         // Score
-        public int finishingScore { get; set; } = 0;
-        public int endOfLevelScore { get; set; } = 0;
+        public int FinishingScore { get; set; } = 100;
+        public int EndOfLevelScore { get; set; } = 0;
         public string PlayerName { get; set; }
     }
 }

@@ -2,7 +2,40 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SpaceInvaders.Views.Upgrades.UpgradesPage"
-             Title="UpgradesPage">
+             xmlns:controls="clr-namespace:SpaceInvaders.Controls"
+             xmlns:views="clr-namespace:SpaceInvaders.Views.Upgrades"
+             xmlns:viewModels="clr-namespace:SpaceInvaders.ViewModel"
+             xmlns:local="clr-namespace:SpaceInvaders"
+             Title="Upgrades Page">
+
+    <ContentPage.Resources>
+        <ControlTemplate x:Key="ImageTextTemplate">
+            <Border Stroke="#000000"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 4,4,4,4"
+                Padding="5">
+                
+                <StackLayout>
+
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{TemplateBinding Command}"/>
+                    </StackLayout.GestureRecognizers>
+
+                    <Image Source="{TemplateBinding Image}"
+                       WidthRequest="50"
+                       MinimumWidthRequest="40" />
+
+                    <Label Text="{TemplateBinding Text}"
+                       HorizontalOptions="Center"
+                       TextColor="{x:StaticResource LightGrey}"
+                       HorizontalTextAlignment="Center"
+                       Padding="10,0" />
+
+                </StackLayout>
+            </Border>
+        </ControlTemplate>
+    </ContentPage.Resources>
+
     <VerticalStackLayout>
         
         <Label 
@@ -19,29 +52,31 @@
             FontSize="18"
             VerticalOptions="Center" 
             HorizontalOptions="Center"/>
-        
+
         <HorizontalStackLayout HorizontalOptions="Center" Spacing="25">
-            
-            <Button
-                x:Name="BuyLaserButton"
-                Text="Laser"
-                WidthRequest="140"
-                SemanticProperties.Hint="Buy one laser round"
-                Clicked="BuyLaserButton_Clicked"
-                HorizontalOptions="Center" />
 
-            <Button
-                x:Name="BuyLifeButton"
-                Text="Life"
-                WidthRequest="140"
-                SemanticProperties.Hint="Buy one extra life"
-                Clicked="BuyLifeButton_Clicked"
-                HorizontalOptions="Center" />
+            <VerticalStackLayout>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-            
+                    <controls:ImageTextButton ControlTemplate="{StaticResource ImageTextTemplate}" Scale="0.9" Grid.Column="0"
+                                              Text="Buy Laser" 
+                                              Image="laser.png"
+                                              Command="{Binding PurchaseLaserCommand}" />
+
+                    <controls:ImageTextButton ControlTemplate="{StaticResource ImageTextTemplate}" Scale="0.9"  Grid.Column="1"
+                                              Text="Buy Lives" 
+                                              Image="heart.png"
+                                              Command="{Binding PurchaseLivesCommand}" />
+
+                </Grid>
+            </VerticalStackLayout>
 
         </HorizontalStackLayout>
-            
+
         <HorizontalStackLayout HorizontalOptions="Center">
             
             <Button

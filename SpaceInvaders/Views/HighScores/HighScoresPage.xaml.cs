@@ -3,6 +3,7 @@ using SpaceInvaders.ViewModel;
 using Microsoft.Maui.Controls;
 using System.Diagnostics;
 using System.Linq;
+using SpaceInvaders.Models;
 
 namespace SpaceInvaders.Views.HighScores
 {
@@ -18,16 +19,18 @@ namespace SpaceInvaders.Views.HighScores
             this.audioManager = audioManager;
             vm = (HighScoresViewModel) BindingContext;
 
-            foreach (HighScoresViewModel.HighScoreRecord record in vm.HighScoresList)
+ /*           foreach (User record in vm.HighScoresList)
             {
                 Debug.WriteLine($"RECORD {record.Score}");
+
                 Label label = new Label()
                 {
-                   Text = record.Name + " " + record.Score.ToString(),
+                   Text = record.Username + " " + record.Score.ToString(),
                    FontSize = 22,
                 };
+
                 HighScoreListView.Children.Add(label);
-            }
+            }*/
         }
 
         private async void GoBackToMain_Clicked(object sender, EventArgs e)
