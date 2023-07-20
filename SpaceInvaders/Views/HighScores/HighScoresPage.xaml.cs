@@ -34,7 +34,7 @@ namespace SpaceInvaders.Views.HighScores
             var counter = 0;
             MissingScoreContainers = (10 - Database.HighScoresList.Count);
 
-            foreach (User user in Database.HighScoresList)
+            foreach (User user in Database.HighScoresList.Take(10))
             {
 
                 Color textColor;
@@ -90,22 +90,25 @@ namespace SpaceInvaders.Views.HighScores
                 counter++;
             }
 
-            for (int i = 0; i < MissingScoreContainers; i++)
+            if (MissingScoreContainers > 0)
             {
-                Label userLabel = new Label()
+                for (int i = 0; i < MissingScoreContainers; i++)
                 {
-                    Text = "",
-                };
+                    Label userLabel = new Label()
+                    {
+                        Text = "",
+                    };
 
-                Label scoreLabel = new Label()
-                {
-                    Text = "",
-                };
+                    Label scoreLabel = new Label()
+                    {
+                        Text = "",
+                    };
 
-                HighScoreGrid.Add(userLabel, 0, counter);
-                HighScoreGrid.Add(scoreLabel, 1, counter);
+                    HighScoreGrid.Add(userLabel, 0, counter);
+                    HighScoreGrid.Add(scoreLabel, 1, counter);
 
-                counter++;
+                    counter++;
+                }
             }
         }
 

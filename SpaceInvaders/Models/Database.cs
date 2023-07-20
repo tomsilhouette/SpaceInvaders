@@ -15,10 +15,6 @@ namespace SpaceInvaders.Models
     {
         public List<User> HighScoresList { get; set; } = new();
 
-        public Database() 
-        {
-        }
-
         public async Task GetHighScoreRequest()
         {
             string apiUrlGet = "https://quiz-5cpoinrp2-webdesignbytom.vercel.app/users/all-users";

@@ -29,12 +29,8 @@ public partial class GameOverPage : ContentPage
         // Check if score is in top 10
         if (Database.HighScoresList.Count >= 10)
         {
-            foreach (User user in Database.HighScoresList)
-            {
-                Debug.WriteLine($"USERS11111 {user.Score}");
-            }
+
             int tenthPositionScore = Database.HighScoresList[9].Score; // 10th position has index 9
-            Debug.WriteLine($"TENTH POSSSSSSS {tenthPositionScore}");
 
             if (State.FinishingScore > tenthPositionScore)
             {
@@ -44,7 +40,6 @@ public partial class GameOverPage : ContentPage
         // If less than 10 people in highscore list
         else if (Database.HighScoresList.Count < 10 && State.FinishingScore > 0)
         {
-            Debug.WriteLine($"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             Govm.SetEntryBoolCommand.Execute(this);
         }
         else
