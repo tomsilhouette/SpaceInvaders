@@ -6,8 +6,12 @@ namespace SpaceInvaders.ViewModel
 {
     public partial class MainPageViewModel : ObservableObject
     {
+
         [ObservableProperty]
-        private int highscore;
+        private string highscoreUsername;
+
+        [ObservableProperty]
+        private int highscoreValue;
 
         public Database Database { get; set; }
 
@@ -16,19 +20,13 @@ namespace SpaceInvaders.ViewModel
             Database = database;
         }
 
-        public MainPageViewModel()
-        {
-
-        }
-
         public async Task Initialise()
         {
-            Debug.WriteLine("IIIIIINNNNNNNIIIIIIIIIITTTTTT");
-            Debug.WriteLine($"DATATATATATATATTAA {Database.HighScoresList.Count}");
-            Debug.WriteLine($"DATATATATATATATTAA {Database.HighScoresList[0]}");
             await Database.GetHighScoreRequest();
-            Debug.WriteLine("IIIIIINNNNNNNIIIIIIIIIITTTTTT2222222222222222222222");
 
+            var winner = Database.HighScoresList.MaxBy(user => user.Score);
+            HighscoreValue = winner.Score;
+            HighscoreUsername = winner.Username;
         }
     }
 }

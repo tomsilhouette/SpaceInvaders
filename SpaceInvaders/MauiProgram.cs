@@ -27,8 +27,10 @@ public static class MauiProgram
                 fonts.AddFont("SegoeIcons.ttf", "Segoe Fluent Icons");
             });
 
+		builder.Services.AddSingleton<Database>();
 		builder.Services.AddSingleton(AudioManager.Current);
 		builder.Services.AddSingleton<GameState>();
+		builder.Services.AddSingleton<GameOverViewModel>();
 		builder.Services.AddSingleton<Player.Player>();
 		builder.Services.AddSingleton<MainPage>();
 		builder.Services.AddSingleton<GamePage>();
@@ -40,7 +42,6 @@ public static class MauiProgram
 		builder.Services.AddSingleton<GameViewModel>();
 		builder.Services.AddSingleton<HighScoresViewModel>();
 		builder.Services.AddSingleton<MainPageViewModel>();
-		builder.Services.AddSingleton<Database>();
 		builder.Services.AddSingleton<BackgroundGenerator>();
 #if DEBUG
 		builder.Logging.AddDebug();

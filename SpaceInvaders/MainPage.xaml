@@ -3,12 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SpaceInvaders"
              xmlns:viewModels="clr-namespace:SpaceInvaders.ViewModel"
+             xmlns:controls="clr-namespace:SpaceInvaders.Controls"
              x:Class="SpaceInvaders.MainPage">
-    <ContentPage.BindingContext>
-        <viewModels:MainPageViewModel />
-    </ContentPage.BindingContext>
     
-        <VerticalStackLayout
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <controls:CapitalizeFirstLetterConverter x:Key="CapitalizeFirstLetterConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <VerticalStackLayout
             Spacing="25"
             Padding="30,0"
             VerticalOptions="Center">
@@ -24,12 +28,14 @@
             <Label
                 Text="Welcome To Space Invaders!"
                 SemanticProperties.Description="Welcome To Space Invaders!"
-                FontSize="18"
+                FontSize="22"
+                FontAttributes="Bold"
                 HorizontalOptions="Center" />
 
             <Button
                 x:Name="StartButton"
                 Text="Start Game"
+                FontAttributes="Bold"
                 SemanticProperties.Hint="Start the game"
                 Clicked="StartButton_Clicked"
                 HorizontalOptions="Center" />
@@ -40,38 +46,52 @@
             <Label
                 Text="High Score"
                 SemanticProperties.Description="Whats the highscore"
-                FontSize="18"
-                HorizontalOptions="Center" />
-    
-            <Label
-                Text="Player Name"
-                x:Name="highScore_name"
-                SemanticProperties.Description="Who the top scorer"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="1000"
-                x:Name="highScore_score"
-                SemanticProperties.Description="The Score"
                 FontSize="22"
+                FontAttributes="Bold"
                 HorizontalOptions="Center" />
 
-            <Button
-                x:Name="ShowHighScores"
-                Text="HighScores"
-                Margin="0,10,0,0"
-                SemanticProperties.Hint="Display HighScores"
-                Clicked="ShowHighScores_Clicked"
-                HorizontalOptions="Center" />
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,0,0,10">
+                
+                <Label
+                    Text="{Binding HighscoreUsername, Converter={StaticResource CapitalizeFirstLetterConverter}}"
+                    x:Name="highScore_name"
+                    SemanticProperties.Description="Who the top scorer"
+                    FontSize="32"
+                    FontAttributes="Bold"
+                    TextColor="Gold"
+                    HorizontalOptions="Center" />
 
-            <Button
-                x:Name="Upgrades"
-                Text="Upgrades"
-                Margin="0,10,0,0"
-                SemanticProperties.Hint="Go to upgrades"
-                Clicked="Upgrades_Clicked"
-                HorizontalOptions="Center" />
+                <Label
+                    Text="{Binding HighscoreValue}"
+                    x:Name="highScore_score"
+                    SemanticProperties.Description="The Score"
+                    FontSize="32"
+                    FontAttributes="Bold"
+                    TextColor="Gold"
+                    HorizontalOptions="Center" />
+
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="25">
+                
+                <Button
+                    x:Name="ShowHighScores"
+                    Text="HighScores"
+                    Margin="0,10,0,0"
+                    FontAttributes="Bold"
+                    SemanticProperties.Hint="Display HighScores"
+                    Clicked="ShowHighScores_Clicked"
+                    HorizontalOptions="Center" />
+
+                <Button
+                    x:Name="Upgrades"
+                    Text="Upgrades"
+                    Margin="0,10,0,0"
+                    FontAttributes="Bold"
+                    SemanticProperties.Hint="Go to upgrades"
+                    Clicked="Upgrades_Clicked"
+                    HorizontalOptions="Center" />
+            </HorizontalStackLayout>
         </VerticalStackLayout>
 
     </VerticalStackLayout>

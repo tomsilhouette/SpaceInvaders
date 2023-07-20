@@ -38,7 +38,29 @@ namespace SpaceInvaders.Levels
                 };
 
                 canvas.DrawPaint(paint);
-            } else
+            }
+            else if (levelNum % 3 == 0)
+            {
+                // Code for when levelNum is divisible by 3
+                var colors = new SKColor[] {
+                     new SKColor((byte)randomNumbers[0], (byte)randomNumbers[1], (byte)randomNumbers[2]),
+                    new SKColor((byte)randomNumbers[3], (byte)randomNumbers[4], (byte)randomNumbers[5])
+                };
+                var shader = SKShader.CreateRadialGradient(
+                    new SKPoint(128, 128),
+                    180,
+                    colors,
+                    null,
+                    SKShaderTileMode.Clamp);
+
+                // use the shader
+                var paint = new SKPaint
+                {
+                    Shader = shader
+                };
+                canvas.DrawPaint(paint);
+            }
+            else
             {
                 // create a gradient
                 var colors = new SKColor[] {

@@ -15,10 +15,7 @@ public partial class GamePage : ContentPage
     private BackgroundGenerator bgGen { get; set; }
     public GameState State { get; set; }
 
-    private List<ILevelBackground> LevelBackgrounds { get; } = new();
-
     int[] randomNumbers = new int[6];
-
 
     public GamePage(GameViewModel viewModel, GameState state)
 	{
@@ -61,10 +58,6 @@ public partial class GamePage : ContentPage
     // Draw background
     private void DrawBackground(SKCanvas canvas, SKPoint start, SKPoint end)
     {
-/*        if (LevelBackgrounds.ElementAtOrDefault(ViewModel.State.CurrentLevel) is ILevelBackground background)
-        {
-            background.Draw(canvas, start, end);
-        }*/
         bgGen.GenBg(State.CurrentLevel, canvas, start, end, randomNumbers);
     }
 

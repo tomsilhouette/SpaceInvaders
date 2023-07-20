@@ -134,7 +134,7 @@ namespace SpaceInvaders.ViewModel
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
-                                alien2.Y += 200;
+                                alien2.Y += 800;
                             }
                             DirectionLeft = false;
                         }
@@ -148,7 +148,7 @@ namespace SpaceInvaders.ViewModel
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
-                                alien2.Y += 200;
+                                alien2.Y += 800;
                             }
                             DirectionLeft = true;
                         }

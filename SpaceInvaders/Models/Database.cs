@@ -17,19 +17,18 @@ namespace SpaceInvaders.Models
 
         public Database() 
         {
-            HighScoresList.Add(new User("Tommmm7", 44));
         }
 
         public async Task GetHighScoreRequest()
         {
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             string apiUrlGet = "https://quiz-5cpoinrp2-webdesignbytom.vercel.app/users/all-users";
 
             using var httpClient = new HttpClient();
 
             try
             {
-                Debug.WriteLine("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+                HighScoresList.Clear();
+
                 HttpResponseMessage response = await httpClient.GetAsync(apiUrlGet);
 
                 response.EnsureSuccessStatusCode(); // Ensure the request was successful
@@ -40,13 +39,14 @@ namespace SpaceInvaders.Models
                 // Parse the JSON response and extract the user data
                 var jsonResponse = JsonConvert.DeserializeObject<dynamic>(responseBody);
 
-                var users = jsonResponse.data.users.ToObject<List<User>>();
+                var users = jsonResponse.data.users;
 
                 foreach (var user in users)
                 {
-                    Debug.WriteLine($"XXXXXXXXXXXXXXXXXX Username: {user.username}, Score: {user.score}");
-                    HighScoresList.Add(new User(user.username, user.score));
+                    HighScoresList.Add(new User((string) user.username, (int) user.score));
                 }
+
+                HighScoresList = HighScoresList.OrderByDescending(u => u.Score).ToList();
 
             }
             catch (Exception ex)
@@ -55,10 +55,10 @@ namespace SpaceInvaders.Models
             }
         }
 
-        public async Task PostNewHighScore()
+        public async Task PostNewHighScore(string Username, int FinishingScore)
         {
-            var username = "NewUser";
-            var score = 100;
+            var username = Username;
+            var score = FinishingScore;
 
             var ApiUrlPost = "https://quiz-5cpoinrp2-webdesignbytom.vercel.app/users/post-score";
             using var httpClient = new HttpClient();
@@ -72,7 +72,7 @@ namespace SpaceInvaders.Models
             try
             {
                 var json = JsonConvert.SerializeObject(requestBody);
-                var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await httpClient.PostAsync(ApiUrlPost, content);
 

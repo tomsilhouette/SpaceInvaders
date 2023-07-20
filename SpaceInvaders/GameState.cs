@@ -16,7 +16,7 @@ namespace SpaceInvaders
         public bool IsPlaying { get; set; } = false;
         public bool GameOver { get; set; } = false;
         // Score
-        public int FinishingScore { get; set; } = 100;
+        public int FinishingScore { get; set; } = 0;
         public int EndOfLevelScore { get; set; } = 0;
         public string PlayerName { get; set; }
     }
