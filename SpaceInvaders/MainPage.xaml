@@ -25,14 +25,29 @@
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand" />
 
+        <VerticalStackLayout Spacing="10">
+            
             <Label
-                Text="Welcome To Space Invaders!"
+                Text="Welcome To "
                 SemanticProperties.Description="Welcome To Space Invaders!"
                 FontSize="22"
+                HorizontalTextAlignment="Center"
+                FontFamily="Lcd Expanded"
                 FontAttributes="Bold"
                 HorizontalOptions="Center" />
+        
+            <Label
+                Text="Space Invaders!"
+                SemanticProperties.Description="Welcome To Space Invaders!"
+                FontSize="26"            
+                HorizontalTextAlignment="Center"
+                FontFamily="Lcd Expanded"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+            
+        </VerticalStackLayout>
 
-            <Button
+        <Button
                 x:Name="StartButton"
                 Text="Start Game"
                 FontAttributes="Bold"
@@ -45,6 +60,7 @@
             
             <Label
                 Text="High Score"
+                FontFamily="Lcd Expanded"
                 SemanticProperties.Description="Whats the highscore"
                 FontSize="22"
                 FontAttributes="Bold"

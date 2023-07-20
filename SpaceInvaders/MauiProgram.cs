@@ -25,6 +25,8 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddFont("SegoeIcons.ttf", "Segoe Fluent Icons");
+                fonts.AddFont("Lcd-Expanded.ttf", "Lcd Expanded");
+                fonts.AddFont("Seven-Segment.ttf", "Seven Segment");
             });
 
 		builder.Services.AddSingleton<Database>();

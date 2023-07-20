@@ -22,7 +22,6 @@
             
         </Grid>
 
-        
         <Button
                 x:Name="GoBackToMain"
                 Text="&#xe72b;    Go Back"

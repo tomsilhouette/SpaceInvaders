@@ -5,6 +5,7 @@ using SpaceInvaders.Enemies;
 using SpaceInvaders.Weapons;
 using System.ComponentModel;
 using System.Diagnostics;
+using SpaceInvaders.Models;
 using System.Reflection;
 using System.Timers;
 using Timer = System.Timers.Timer;
@@ -17,7 +18,10 @@ namespace SpaceInvaders.ViewModel
         public GameState State { get; set; }
 
         [ObservableProperty]
-        private int currentScore;
+        public int currentScore;  
+        
+        [ObservableProperty]
+        public string currentLevel;
 
         public Player.Player player = new Player.Player();
         public SKPaint PaintCom { get; set; }
@@ -40,6 +44,11 @@ namespace SpaceInvaders.ViewModel
         public GameViewModel(GameState state) 
         {
             State = state;
+            currentLevel = "0" + State.CurrentLevel+1.ToString();
+        }        
+        public GameViewModel() 
+        {
+
         }
 
         private void SetTimer()
@@ -60,7 +69,6 @@ namespace SpaceInvaders.ViewModel
             if (!State.IsPlaying)
             {
                 aTimer.Stop();
-
 
                 player.playerXcord = 500;
                 player.playerYcord = 1750;
@@ -134,7 +142,7 @@ namespace SpaceInvaders.ViewModel
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
-                                alien2.Y += 800;
+                                alien2.Y += 100;
                             }
                             DirectionLeft = false;
                         }
@@ -148,7 +156,7 @@ namespace SpaceInvaders.ViewModel
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
-                                alien2.Y += 800;
+                                alien2.Y += 100;
                             }
                             DirectionLeft = true;
                         }

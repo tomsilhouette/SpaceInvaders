@@ -6,6 +6,9 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              xmlns:viewModels="clr-namespace:SpaceInvaders.ViewModel"
              Title="Game Page from XAML">
+    <ContentPage.BindingContext>
+        <viewModels:GameViewModel />
+    </ContentPage.BindingContext>
     
     <Grid RowDefinitions="*" >
         <skia:SKCanvasView Grid.Row="0" x:Name="canvasView" 
@@ -13,6 +16,20 @@
                 >
         </skia:SKCanvasView>
 
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            
+            <Label
+                Text="{Binding CurrentLevel}"
+                TextColor="White"
+                x:Name="LevelNumberContainer"
+                SemanticProperties.Description="Current level"
+                FontSize="66"
+                FontFamily="Seven Segment"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+            
+        </VerticalStackLayout>
+        
         <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,10" Spacing="25">
             
             <Button
@@ -47,7 +64,7 @@
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
 
             <Label
-                Text="{Binding CurrentScore, StringFormat='Score: {0}'}}"
+                Text="{Binding currentScore, StringFormat='Score: {0}'}"
                 TextColor="White"
                 x:Name="scoreContainer"
                 SemanticProperties.Description="Current score"
