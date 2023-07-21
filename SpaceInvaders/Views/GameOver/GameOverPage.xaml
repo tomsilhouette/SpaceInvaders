@@ -40,7 +40,8 @@
                    FontSize="22"/>
             
             <Entry Placeholder="Enter username..."
-                   Text="{Binding Username}"            
+                   Text="{Binding Username}"
+                   x:Name="EntryContainer"
                    ReturnCommand="{Binding CloseKeyboardCommand}"
                    />
             

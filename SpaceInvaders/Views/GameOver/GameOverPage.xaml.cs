@@ -11,7 +11,6 @@ public partial class GameOverPage : ContentPage
     public Database Database { get; set; }
     private GameOverViewModel Govm { get; set; }
 
-
     public GameOverPage(GameState state, Database database, GameOverViewModel govm)
 	{
         Database = database;

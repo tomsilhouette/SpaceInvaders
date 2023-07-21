@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SpaceInvaders.Models;
-
+using SpaceInvaders.Views.GameOver;
 
 namespace SpaceInvaders.ViewModel
 {
@@ -27,7 +27,7 @@ namespace SpaceInvaders.ViewModel
         }
         public GameOverViewModel()
         {
-           
+            
         }
 
         [RelayCommand]
@@ -41,6 +41,7 @@ namespace SpaceInvaders.ViewModel
         {
             Database.PostNewHighScore(Username, State.FinishingScore);
             SubmitBtn = "Score Posted!";
+            Username = "";
         }        
         
         [RelayCommand]

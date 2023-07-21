@@ -12,7 +12,12 @@ namespace SpaceInvaders.ViewModel
 {
     public partial class GameViewModel : ObservableObject
     {
-        private Timer aTimer;       
+        private Timer aTimer;
+
+        // Enemy ship appearance
+        private Timer enemyTimer;
+        private int enemyTimerCountdownSeconds;
+        private bool isEnemyTimerRunning = false;
         public GameState State { get; set; }
 
         [ObservableProperty]
@@ -29,10 +34,12 @@ namespace SpaceInvaders.ViewModel
         // Game Images
         private SKBitmap playerBitmap;
         private SKBitmap enemyAlienBitmap;
+        private SKBitmap enemyShipBitmap;
 
         // Game Objects
         public List<Alien> EnemyAlienGrid = new List<Alien>();
         public List<Bolt> BoltsFired = new List<Bolt>();
+        public List<Ship> EnemyShips = new List<Ship>();
 
         private int enemyAlienCount = 1;
 
@@ -44,6 +51,7 @@ namespace SpaceInvaders.ViewModel
         public GameViewModel(GameState state) 
         {
             State = state;
+            enemyTimerCountdownSeconds = State.ShipTimeInterval;
         }        
         public GameViewModel() 
         {
@@ -63,20 +71,48 @@ namespace SpaceInvaders.ViewModel
             aTimer.Enabled = true;
         }
 
+        private void SetEnemyShipTimer()
+        {
+            enemyTimer = new Timer(TimeSpan.FromSeconds(1.0f));
+            enemyTimer.Elapsed += EnemyTimerControls;
+            enemyTimer.AutoReset = true;
+            enemyTimer.Enabled = true;
+        }
+
+        private void EnemyTimerControls(object source, ElapsedEventArgs e)
+        {
+            if (enemyTimerCountdownSeconds <= 0 && EnemyShips.Count < 1)
+            {
+                Debug.WriteLine("222222222222222222222222222et");
+
+/*                enemyTimer.Stop();
+                enemyTimer.Enabled = false;*/
+                CreateShipAndAddToCanvas();
+            }
+            else
+            {
+                enemyTimerCountdownSeconds--;
+            }
+        }
+
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             TickEvent?.Invoke(this, EventArgs.Empty);
             if (!State.IsPlaying)
             {
                 aTimer.Stop();
-
+                enemyTimer.Stop();
                 player.playerXcord = 500;
                 player.playerYcord = 1750;
+                enemyTimerCountdownSeconds = State.ShipTimeInterval;
+                EnemyShips.Clear();
+
 
                 if (EnemyAlienGrid.Count > 0) 
                 {
                     State.FinishingScore += CurrentScore;
                     EnemyAlienGrid.Clear();
+
                     Shell.Current.GoToAsync("///GameOverPage");
                 }
 
@@ -92,6 +128,9 @@ namespace SpaceInvaders.ViewModel
 
         internal void StartGame()
         {
+            enemyTimerCountdownSeconds = State.ShipTimeInterval;
+            EnemyShips.Clear();
+
             State.IsPlaying = true;
 
             // Add player
@@ -101,14 +140,17 @@ namespace SpaceInvaders.ViewModel
             CreateGameAnimations();
 
             SetTimer();
+            SetEnemyShipTimer();
         }
 
         // Draws every tick of the timer
         internal void DrawGame(SKCanvas gameCanvas)
         {
-            // Draw the image on the canvas
+             // Draw the image on the canvas
             var mat = SKMatrix.CreateScale(0.2f, 0.2f);
             gameCanvas.SetMatrix(mat);
+
+            float canvasWidth = gameCanvas.DeviceClipBounds.Width;
 
             // Set player
             var playerPos = mat.Invert().MapPoint(player.playerXcord, player.playerYcord);
@@ -120,12 +162,55 @@ namespace SpaceInvaders.ViewModel
 
                 BoltsFired.Clear();
                 EnemyAlienGrid.Clear();
+                EnemyShips.Clear();
                 State.IsPlaying = false;
+                enemyTimerCountdownSeconds = State.ShipTimeInterval;
             }
             else {
 
                 List<Alien> aliensToRemove = new List<Alien>();
                 List<Bolt> killBoltsToRemove = new List<Bolt>();
+                List<Ship> shipsToRemove = new List<Ship>();
+
+                foreach (Ship ship in EnemyShips)
+                {
+                    using var shipStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemyShip.png");
+                    enemyShipBitmap = SKBitmap.Decode(shipStream);
+
+                    var shipMap = mat.Invert().MapPoint(ship.X, ship.Y);
+                    gameCanvas.DrawBitmap(enemyShipBitmap, shipMap, new SKPaint());
+
+                    ship.X += 5;
+
+                    if (ship.X >= canvasWidth)
+                    {
+                        shipsToRemove.Add(ship);
+                        enemyTimerCountdownSeconds = State.ShipTimeInterval;
+                    }
+
+                    var shipRect = mat.Invert().MapRect(new SKRect(ship.X, ship.Y, ship.X + 120, ship.Y + 90));
+
+                    gameCanvas.DrawRect(shipRect, new SKPaint()
+                    {
+                        IsStroke = true,
+                        Color = SKColors.Transparent
+                    });
+
+                    var shipPos = mat.Invert().MapPoint(ship.X, ship.Y);
+
+
+                    foreach (Bolt bolt in BoltsFired)
+                    {
+                        var boltPos = mat.Invert().MapPoint(bolt.BoltXcord, bolt.BoltYcord);
+                        if (shipRect.Contains(boltPos))
+                        {
+                            enemyTimerCountdownSeconds = State.ShipTimeInterval;
+                            shipsToRemove.Add(ship);
+                            killBoltsToRemove.Add(bolt);
+                            CurrentScore += ship.ScorePerKill;
+                        }
+                    }
+                }
 
                 foreach (Alien alien in EnemyAlienGrid)
                 {
@@ -134,6 +219,7 @@ namespace SpaceInvaders.ViewModel
                         // LOSING CONDITIONS
                         killBoltsToRemove.Clear();
                         BoltsFired.Clear();
+                        EnemyShips.Clear();
                         State.IsPlaying = false;
                         State.GameOver = true;
                     }
@@ -144,7 +230,7 @@ namespace SpaceInvaders.ViewModel
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
-                                alien2.Y += 500;
+                                alien2.Y += 60;
                             }
                             DirectionLeft = false;
                         }
@@ -158,7 +244,7 @@ namespace SpaceInvaders.ViewModel
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
-                                alien2.Y += 500;
+                                alien2.Y += 60;
                             }
                             DirectionLeft = true;
                         }
@@ -168,11 +254,11 @@ namespace SpaceInvaders.ViewModel
                     gameCanvas.DrawBitmap(enemyAlienBitmap, alienPos, new SKPaint());
 
 
-                    var alienRect = mat.Invert().MapRect(new SKRect(alien.X, alien.Y, alien.X + 120, alien.Y + 100));
+                    var alienRect = mat.Invert().MapRect(new SKRect(alien.X, alien.Y, alien.X + 150, alien.Y + 100));
                     gameCanvas.DrawRect(alienRect, new SKPaint()
                     {
                         IsStroke = true,
-                        Color = SKColors.AliceBlue
+                        Color = SKColors.Transparent
                     });
 
                     foreach (Bolt bolt in BoltsFired)
@@ -197,6 +283,11 @@ namespace SpaceInvaders.ViewModel
                 foreach (Bolt boltToRemove in killBoltsToRemove)
                 {
                     BoltsFired.Remove(boltToRemove);
+                }
+
+                foreach (Ship ship in shipsToRemove)
+                {
+                    EnemyShips.Remove(ship);
                 }
 
                 if (BoltsFired.Count > 0)
@@ -256,6 +347,11 @@ namespace SpaceInvaders.ViewModel
             // Get enenmy images
             using var alienStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemyAlien.png");
             enemyAlienBitmap = SKBitmap.Decode(alienStream);
+        }
+
+        internal void CreateShipAndAddToCanvas()
+        {
+            EnemyShips.Add(new Ship());
         }
 
         public void SetLevelNumber()
