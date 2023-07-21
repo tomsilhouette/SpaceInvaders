@@ -1,33 +1,61 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpaceInvaders.ViewModel
 {
     public partial class UpgradesViewModel : ObservableObject
     {
-        public UpgradesViewModel() 
+        public GameState State { get; set; }
+
+        public UpgradesViewModel(GameState state) 
         { 
-            
+            State = state;
         }
 
         // BUY LASER
         [RelayCommand]
         private void PurchaseLaser()
         {
-            Debug.WriteLine("Im CLICKKKKKED");
+            if (State.FinishingScore >= State.LaserCost)
+            {
+                Debug.WriteLine("LAZZZZZZZZZZZER");
+                State.PlayerLasersOwned++;
+            }
+            else
+            {
+                throw new Exception();
+            }
         }    
         
         // BUY LIVES
         [RelayCommand]
         private void PurchaseLives()
         {
-            Debug.WriteLine("LIFFFFFFFFE");
+            if (State.FinishingScore >= State.ExtraLifeCost && State.PlayerLasersOwned < State.MaxPlayerLives)
+            {
+                Debug.WriteLine("LIFFFFFFFFE");
+                State.PlayerLives++;
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }        
+        
+        // BUY SHIELDS
+        [RelayCommand]
+        private void PurchaseShield()
+        {
+            if (State.FinishingScore >= State.EnergyShieldCost)
+            {
+                Debug.WriteLine("SHIELDDDDD");
+                State.PlayerShieldsOwned++;
+            } 
+            else
+            {
+                throw new Exception();
+            }
         }
     }
 }

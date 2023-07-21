@@ -61,16 +61,25 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition  />
+                        <RowDefinition  />
+                    </Grid.RowDefinitions>
 
-                    <controls:ImageTextButton ControlTemplate="{StaticResource ImageTextTemplate}" Scale="0.9" Grid.Column="0"
+                    <controls:ImageTextButton ControlTemplate="{StaticResource ImageTextTemplate}" Scale="0.9" Grid.Column="0" Grid.Row="0"
                                               Text="Buy Laser" 
                                               Image="laser.png"
                                               Command="{Binding PurchaseLaserCommand}" />
 
-                    <controls:ImageTextButton ControlTemplate="{StaticResource ImageTextTemplate}" Scale="0.9"  Grid.Column="1"
+                    <controls:ImageTextButton ControlTemplate="{StaticResource ImageTextTemplate}" Scale="0.9"  Grid.Column="1" Grid.Row="0"
                                               Text="Buy Lives" 
                                               Image="heart.png"
                                               Command="{Binding PurchaseLivesCommand}" />
+                    
+                    <controls:ImageTextButton ControlTemplate="{StaticResource ImageTextTemplate}" Scale="0.9"  Grid.Column="0" Grid.Row="1"
+                                              Text="Buy Shield" 
+                                              Image="energy_shield.png"
+                                              Command="{Binding PurchaseShieldCommand}" />
 
                 </Grid>
             </VerticalStackLayout>

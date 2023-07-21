@@ -11,8 +11,6 @@ namespace SpaceInvaders.Player
 {
     public class Player
     {
-        public int playerLives { get; set; } = 3;
-
         public int playerXcord { get; set; } = 500;
         public int playerYcord { get; set; } = 1750;
 

@@ -13,7 +13,8 @@ namespace SpaceInvaders.Weapons
 
         public float EnergyShieldXcord { get; set; } = 0;
         public float EnergyShieldYcord { get; set; } = 0;
-        public int LaserCost { get; set; } = 25;
+        public int EnergyShieldDurationInSeconds { get; set; } = 5;
+
 
         public EnergyShield(float energyShieldXcord, float energyShieldYcord)
         {

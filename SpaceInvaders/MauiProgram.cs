@@ -9,6 +9,7 @@ using SpaceInvaders.Views.GameOver;
 using SpaceInvaders.Views.HighScores;
 using SpaceInvaders.Views.LevelComplete;
 using SpaceInvaders.Views.Upgrades;
+using SpaceInvaders.Weapons;
 
 namespace SpaceInvaders;
 
@@ -41,6 +42,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<UpgradesPage>();
 		builder.Services.AddSingleton<UpgradesViewModel>();
 		builder.Services.AddSingleton<GameOverPage>();
+		builder.Services.AddSingleton<Laser>();
 		builder.Services.AddSingleton<GameViewModel>();
 		builder.Services.AddSingleton<HighScoresViewModel>();
 		builder.Services.AddSingleton<MainPageViewModel>();

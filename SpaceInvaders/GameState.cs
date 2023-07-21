@@ -15,10 +15,23 @@ namespace SpaceInvaders
         // Game in progress? 
         public bool IsPlaying { get; set; } = false;
         public bool GameOver { get; set; } = false;
+
         // Score
         public int FinishingScore { get; set; } = 0;
         public int EndOfLevelScore { get; set; } = 0;
         public int ShipTimeInterval { get; set; } = 5;
-        public string PlayerName { get; set; }
+
+        // Weapons and shield
+        public int PlayerLasersOwned { get; set; } = 3;
+        public int PlayerShieldsOwned { get; set; } = 3;
+
+        // Costs
+        public int LaserCost { get; set; } = 25;
+        public int EnergyShieldCost { get; set; } = 25;
+        public int ExtraLifeCost { get; set; } = 25;
+
+        // Player life
+        public int PlayerLives { get; set; } = 1;
+        public int MaxPlayerLives { get; set; } = 3;
     }
 }

@@ -13,7 +13,6 @@ namespace SpaceInvaders.Weapons
 
         public float LaserXcord { get; set; } = 0;
         public float LaserYcord { get; set; } = 0;
-        public int LaserCost { get; set; } = 25;
 
         public Laser(float laserXcord, float laserYcord)
         {
