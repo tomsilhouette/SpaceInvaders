@@ -14,14 +14,27 @@
                 >
         </skia:SKCanvasView>
 
+        <HorizontalStackLayout x:Name="LivesContainer" HorizontalOptions="Start" VerticalOptions="Start" Margin="10,10,0,0">
+            <ImageButton Source="heart.png"
+                         WidthRequest="25"
+                         HeightRequest="25"/>
+            <ImageButton Source="heart.png"
+                         WidthRequest="25"
+                         HeightRequest="25"/>
+            <ImageButton Source="heart.png"
+                         WidthRequest="25"
+                         HeightRequest="25"/>
+        </HorizontalStackLayout>
+
         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
             
             <Label
                 Text="{Binding CurrentLevel}"
                 TextColor="White"
+                Opacity="0.35"
                 x:Name="LevelNumberContainer"
                 SemanticProperties.Description="Current level"
-                FontSize="66"
+                FontSize="88"
                 FontFamily="Seven Segment"
                 FontAttributes="Bold"
                 HorizontalOptions="Center" />

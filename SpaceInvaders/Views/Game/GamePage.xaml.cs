@@ -4,6 +4,7 @@ using SpaceInvaders.Levels;
 using SpaceInvaders.ViewModel;
 using SpaceInvaders.Weapons;
 using Microsoft.Maui.Controls;
+using System.Diagnostics;
 
 namespace SpaceInvaders.Views.Game;
 
@@ -35,6 +36,7 @@ public partial class GamePage : ContentPage
         {
             randomNumbers[i] = (byte)random.Next(256);
         }
+
     }
 
     protected override void OnDisappearing()

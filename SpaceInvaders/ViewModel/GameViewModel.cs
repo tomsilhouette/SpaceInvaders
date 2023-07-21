@@ -3,6 +3,7 @@ using SkiaSharp;
 using SpaceInvaders.Enemies;
 using SpaceInvaders.Weapons;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Reflection;
 using System.Timers;
 using Timer = System.Timers.Timer;
@@ -43,7 +44,6 @@ namespace SpaceInvaders.ViewModel
         public GameViewModel(GameState state) 
         {
             State = state;
-            currentLevel = "0" + State.CurrentLevel+1.ToString();
         }        
         public GameViewModel() 
         {
@@ -52,6 +52,8 @@ namespace SpaceInvaders.ViewModel
 
         private void SetTimer()
         {
+            SetLevelNumber();
+
             // Create a timer with a two second interval.
             aTimer = new Timer(TimeSpan.FromMilliseconds(32.0f));
 
@@ -64,7 +66,6 @@ namespace SpaceInvaders.ViewModel
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             TickEvent?.Invoke(this, EventArgs.Empty);
-
             if (!State.IsPlaying)
             {
                 aTimer.Stop();
@@ -75,11 +76,11 @@ namespace SpaceInvaders.ViewModel
                 if (EnemyAlienGrid.Count > 0) 
                 {
                     State.FinishingScore += CurrentScore;
-
+                    EnemyAlienGrid.Clear();
                     Shell.Current.GoToAsync("///GameOverPage");
                 }
 
-                if (EnemyAlienGrid.Count == 0)
+                if (EnemyAlienGrid.Count == 0 && !State.GameOver)
                 {
                     State.FinishingScore += CurrentScore;
                     State.EndOfLevelScore = CurrentScore;
@@ -134,6 +135,7 @@ namespace SpaceInvaders.ViewModel
                         killBoltsToRemove.Clear();
                         BoltsFired.Clear();
                         State.IsPlaying = false;
+                        State.GameOver = true;
                     }
 
                     if (DirectionLeft)
@@ -142,7 +144,7 @@ namespace SpaceInvaders.ViewModel
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
-                                alien2.Y += 100;
+                                alien2.Y += 500;
                             }
                             DirectionLeft = false;
                         }
@@ -156,7 +158,7 @@ namespace SpaceInvaders.ViewModel
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
-                                alien2.Y += 100;
+                                alien2.Y += 500;
                             }
                             DirectionLeft = true;
                         }
@@ -175,7 +177,7 @@ namespace SpaceInvaders.ViewModel
 
                     foreach (Bolt bolt in BoltsFired)
                     {
-                        var boltPos = mat.Invert().MapPoint(bolt.BoltXcord, bolt.BoltYcord);
+                        var boltPos = mat.Invert().MapPoint(bolt.BoltXcord, bolt.BoltYcord); 
                         if (alienRect.Contains(boltPos))
                         {
                             aliensToRemove.Add(alien);
@@ -254,6 +256,17 @@ namespace SpaceInvaders.ViewModel
             // Get enenmy images
             using var alienStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemyAlien.png");
             enemyAlienBitmap = SKBitmap.Decode(alienStream);
+        }
+
+        public void SetLevelNumber()
+        {
+            int levelNum = State.CurrentLevel + 1;
+            CurrentLevel = levelNum.ToString().PadLeft(3, '0');
+        }
+
+        public void SetplayerLives()
+        {
+
         }
     }
 }

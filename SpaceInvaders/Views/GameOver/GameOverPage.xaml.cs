@@ -63,5 +63,8 @@ public partial class GameOverPage : ContentPage
     private void ResetGame()
     {
         State.CurrentLevel = 0;
+        State.GameOver = false;
+        State.FinishingScore = 0;
+        State.EndOfLevelScore = 0;
     }
 }
