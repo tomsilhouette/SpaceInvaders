@@ -1,11 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Maui.Controls.Shapes;
 using SkiaSharp;
 using SpaceInvaders.Enemies;
 using SpaceInvaders.Weapons;
 using System.ComponentModel;
-using System.Diagnostics;
-using SpaceInvaders.Models;
 using System.Reflection;
 using System.Timers;
 using Timer = System.Timers.Timer;
@@ -28,9 +25,11 @@ namespace SpaceInvaders.ViewModel
 
         private readonly string imageSource = "SpaceInvaders.Resources.Images.";
 
+        // Game Images
         private SKBitmap playerBitmap;
         private SKBitmap enemyAlienBitmap;
 
+        // Game Objects
         public List<Alien> EnemyAlienGrid = new List<Alien>();
         public List<Bolt> BoltsFired = new List<Bolt>();
 
@@ -119,6 +118,7 @@ namespace SpaceInvaders.ViewModel
                 // WIN GAME CONDITIONS
 
                 BoltsFired.Clear();
+                EnemyAlienGrid.Clear();
                 State.IsPlaying = false;
             }
             else {

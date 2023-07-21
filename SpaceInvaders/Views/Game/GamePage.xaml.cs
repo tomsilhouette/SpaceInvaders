@@ -1,10 +1,9 @@
-using Microsoft.Maui.Graphics;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SpaceInvaders.Levels;
 using SpaceInvaders.ViewModel;
 using SpaceInvaders.Weapons;
-using System.Diagnostics;
+using Microsoft.Maui.Controls;
 
 namespace SpaceInvaders.Views.Game;
 
@@ -23,7 +22,7 @@ public partial class GamePage : ContentPage
 		Title = "Space Invaders From Space 1.1.0";
 
         BindingContext = ViewModel = viewModel;
-        BindingContext = bgGen = new BackgroundGenerator();
+        bgGen = new BackgroundGenerator();
         State = state;
     }
 

@@ -13,9 +13,6 @@ namespace SpaceInvaders.Player
     {
         public int playerLives { get; set; } = 3;
 
-        // Just a test name for checking data
-        public string playerName = "johnnnny6";
-
         public int playerXcord { get; set; } = 500;
         public int playerYcord { get; set; } = 1750;
 
