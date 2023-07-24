@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Maui.Controls.Shapes;
 using SkiaSharp;
 using SpaceInvaders.Enemies;
 using SpaceInvaders.Weapons;
@@ -13,6 +14,8 @@ namespace SpaceInvaders.ViewModel
     public partial class GameViewModel : ObservableObject
     {
         private Timer aTimer;
+
+        Random random = new Random();
 
         // Enemy ship appearance
         private Timer enemyTimer;
@@ -35,18 +38,24 @@ namespace SpaceInvaders.ViewModel
         private SKBitmap playerBitmap;
         private SKBitmap enemyAlienBitmap;
         private SKBitmap enemyShipBitmap;
+        private SKBitmap enemyAlienAttackBitmap;
 
         // Game Objects
         public List<Alien> EnemyAlienGrid = new List<Alien>();
         public List<Bolt> BoltsFired = new List<Bolt>();
         public List<Ship> EnemyShips = new List<Ship>();
+        public List<Object> EnemyBoltsFired = new List<Object>();
+
+        public List<int> EnemyAlienNumbersAvailable = new List<int>();
 
         private int enemyAlienCount = 1;
+        private int AttackingEnemyNum;
 
         public event EventHandler TickEvent;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public bool DirectionLeft { get; set; } = true;
+        public bool EnemyAttacking { get; set; } = false;
 
         public GameViewModel(GameState state) 
         {
@@ -83,10 +92,6 @@ namespace SpaceInvaders.ViewModel
         {
             if (enemyTimerCountdownSeconds <= 0 && EnemyShips.Count < 1)
             {
-                Debug.WriteLine("222222222222222222222222222et");
-
-/*                enemyTimer.Stop();
-                enemyTimer.Enabled = false;*/
                 CreateShipAndAddToCanvas();
             }
             else
@@ -135,7 +140,8 @@ namespace SpaceInvaders.ViewModel
 
             // Add player
             using var playerStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}{player.playerImagePath}");
-            playerBitmap = SKBitmap.Decode(playerStream);
+            playerBitmap = SKBitmap.Decode(playerStream); 
+           
 
             CreateGameAnimations();
 
@@ -155,6 +161,8 @@ namespace SpaceInvaders.ViewModel
             // Set player
             var playerPos = mat.Invert().MapPoint(player.playerXcord, player.playerYcord);
             gameCanvas.DrawBitmap(playerBitmap, new SKPoint(playerPos.X, playerPos.Y), new SKPaint());
+
+            GenerateRandomEnemyAttack(gameCanvas, mat);
 
             if (EnemyAlienGrid.Count == 0)
             {
@@ -268,9 +276,29 @@ namespace SpaceInvaders.ViewModel
                         {
                             aliensToRemove.Add(alien);
                             killBoltsToRemove.Add(bolt);
+
+                            // Find and remove number from list
+                            var alienNum = alien.EnemyNumber;
+                            EnemyAlienNumbersAvailable.Remove(alienNum);
                         }
                     }
 
+/*                    if (EnemyAttacking)
+                    {
+                        // Add enemy bolt
+                        using var enemyAttackStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemy_attack.png");
+                        enemyAlienAttackBitmap = SKBitmap.Decode(enemyAttackStream).Resize(new SKImageInfo(200, 200), SKFilterQuality.Low);
+
+                        var alienAttackPos = mat.Invert().MapPoint(alien.X + 70, alien.Y + 70);
+                        gameCanvas.DrawBitmap(enemyAlienAttackBitmap, alienAttackPos, new SKPaint());
+
+                        var alienAttackRect = mat.Invert().MapRect(new SKRect(alien.X, alien.Y, alien.X + 150, alien.Y + 100));
+                        gameCanvas.DrawRect(alienAttackRect, new SKPaint()
+                        {
+                            IsStroke = true,
+                            Color = SKColors.Red
+                        });
+                    }*/
                 }
 
                 // Remove the bolts outside the foreach loop
@@ -337,6 +365,7 @@ namespace SpaceInvaders.ViewModel
                 for (int j = 0; j < State.NumberOfEnemiesPerRow; j++)
                 {
                     EnemyAlienGrid.Add(new Alien(enemyAlienCount, currentAlienXCord, currentAlienYCord));
+                    EnemyAlienNumbersAvailable.Add(enemyAlienCount);
                     enemyAlienCount++;
                     currentAlienXCord += 150;
                 }
@@ -344,9 +373,37 @@ namespace SpaceInvaders.ViewModel
                 currentAlienYCord += 100;
             }
            
-            // Get enenmy images
+            // Get enemy images
             using var alienStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemyAlien.png");
             enemyAlienBitmap = SKBitmap.Decode(alienStream);
+        }
+        internal void GenerateRandomEnemyAttack(SKCanvas gameCanvas, SKMatrix mat)
+        {
+           int randomAttack = (byte)random.Next(100);
+
+            if (randomAttack >= 99)
+            {
+                Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                AttackingEnemyNum = EnemyAlienNumbersAvailable[random.Next(0, EnemyAlienNumbersAvailable.Count)];
+                Debug.WriteLine($"NNNNNNNN {AttackingEnemyNum}");
+                EnemyAttacking = true;
+
+                Alien alienFound = EnemyAlienGrid[AttackingEnemyNum -1];
+
+                // Add enemy bolt
+                using var enemyAttackStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemy_attack.png");
+                enemyAlienAttackBitmap = SKBitmap.Decode(enemyAttackStream).Resize(new SKImageInfo(200, 200), SKFilterQuality.Low);
+
+                var alienAttackPos = mat.Invert().MapPoint(alienFound.X + 70, alienFound.Y + 70);
+                gameCanvas.DrawBitmap(enemyAlienAttackBitmap, alienAttackPos, new SKPaint());
+
+                var alienAttackRect = mat.Invert().MapRect(new SKRect(alienFound.X, alienFound.Y, alienFound.X + 150, alienFound.Y + 100));
+                gameCanvas.DrawRect(alienAttackRect, new SKPaint()
+                {
+                    IsStroke = true,
+                    Color = SKColors.Red
+                });
+            }
         }
 
         internal void CreateShipAndAddToCanvas()

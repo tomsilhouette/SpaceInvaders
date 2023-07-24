@@ -8,11 +8,11 @@ namespace SpaceInvaders.Enemies
 {
     public class Alien : IEnemy
     {
-
         public int EnemyNumber { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
         public string AlienImagePath { get; set; } = "enemyAlien.png";
+        public string AlienAttackImagePath { get; set; } = "enemyAttack.png";
         public int ScorePerKill { get; } = 10;
 
         public Alien(int enemyNumber, int x, int y)

@@ -21,6 +21,7 @@ namespace SpaceInvaders.ViewModel
             {
                 Debug.WriteLine("LAZZZZZZZZZZZER");
                 State.PlayerLasersOwned++;
+                State.FinishingScore -= State.LaserCost;
             }
             else
             {
@@ -36,6 +37,7 @@ namespace SpaceInvaders.ViewModel
             {
                 Debug.WriteLine("LIFFFFFFFFE");
                 State.PlayerLives++;
+                State.FinishingScore -= State.ExtraLifeCost;
             }
             else
             {
@@ -51,6 +53,7 @@ namespace SpaceInvaders.ViewModel
             {
                 Debug.WriteLine("SHIELDDDDD");
                 State.PlayerShieldsOwned++;
+                State.FinishingScore -= State.EnergyShieldCost;
             } 
             else
             {

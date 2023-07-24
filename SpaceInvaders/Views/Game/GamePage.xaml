@@ -15,13 +15,13 @@
         </skia:SKCanvasView>
 
         <HorizontalStackLayout x:Name="LivesContainer" HorizontalOptions="Start" VerticalOptions="Start" Margin="10,10,0,0">
-            <ImageButton Source="heart.png"
+            <Image Source="heart.png"
                          WidthRequest="25"
                          HeightRequest="25"/>
-            <ImageButton Source="heart.png"
+            <Image Source="heart.png"
                          WidthRequest="25"
                          HeightRequest="25"/>
-            <ImageButton Source="heart.png"
+            <Image Source="heart.png"
                          WidthRequest="25"
                          HeightRequest="25"/>
         </HorizontalStackLayout>

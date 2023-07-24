@@ -42,6 +42,7 @@
 		<MauiImage Remove="Resources\Images\barrier.png" />
 		<MauiImage Remove="Resources\Images\enemyAlien.png" />
 		<MauiImage Remove="Resources\Images\enemyShip.png" />
+		<MauiImage Remove="Resources\Images\enemy_attack.png" />
 		<MauiImage Remove="Resources\Images\player.png" />
 		<MauiImage Remove="Resources\Images\tnt.png" />
 
@@ -86,6 +87,7 @@
 		<MauiAsset Include="Resources\Audio\shoot.wav">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</MauiAsset>
+		<EmbeddedResource Include="Resources\Images\enemy_attack.png" />
 		<EmbeddedResource Include="Resources\Images\barrier.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
