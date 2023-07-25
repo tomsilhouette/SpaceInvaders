@@ -94,13 +94,11 @@ namespace SpaceInvaders.ViewModel
                // enemyTimer.Stop();
                 player.playerXcord = 500;
                 player.playerYcord = 1750;
-                EnemyShips.Clear();
 
 
                 if (EnemyAlienGrid.Count > 0) 
                 {
                     State.FinishingScore += CurrentScore;
-                    EnemyAlienGrid.Clear();
 
                     Shell.Current.GoToAsync("///GameOverPage");
                 }
@@ -120,6 +118,13 @@ namespace SpaceInvaders.ViewModel
             SetLevelNumber();
 
             EnemyShips.Clear();
+            EnemyAlienGrid.Clear();
+            EnemyBoltsFired.Clear();
+            BoltsFired.Clear();
+            AttackingAliens.Clear();
+
+            enemyShotTimer = 50;
+            enemyShipTimer = 200;
 
             State.IsPlaying = true;
 
@@ -145,7 +150,7 @@ namespace SpaceInvaders.ViewModel
             var playerPos = mat.Invert().MapPoint(player.playerXcord, player.playerYcord);
             gameCanvas.DrawBitmap(playerBitmap, new SKPoint(playerPos.X, playerPos.Y), new SKPaint());
 
-            var playerRect = mat.Invert().MapRect(new SKRect(player.playerXcord - 2, player.playerYcord, player.playerXcord + 110, player.playerYcord + 100));
+            var playerRect = mat.Invert().MapRect(new SKRect(player.playerXcord - 5, player.playerYcord, player.playerXcord + 110, player.playerYcord + 100));
             gameCanvas.DrawRect(playerRect, new SKPaint()
             {
                 IsStroke = true,
@@ -155,12 +160,13 @@ namespace SpaceInvaders.ViewModel
             GenerateRandomEnemyAttack();
             GenerateRandomEnemyShip();
 
-                if (EnemyAlienGrid.Count == 0)
+            if (EnemyAlienGrid.Count == 0)
             {
+                Debug.WriteLine("00000000000000000000000000000000000000000000000000000000000000000000");
                 CheckForWinConditions();
             }
-            else {
-
+            else 
+            {
                 List<Alien> aliensToRemove = new();
                 List<Bolt> killBoltsToRemove = new();
                 List<Ship> shipsToRemove = new();
@@ -191,7 +197,6 @@ namespace SpaceInvaders.ViewModel
 
                     var shipPos = mat.Invert().MapPoint(ship.X, ship.Y);
 
-
                     foreach (Bolt bolt in BoltsFired)
                     {
                         var boltPos = mat.Invert().MapPoint(bolt.BoltXcord, bolt.BoltYcord);
@@ -204,16 +209,13 @@ namespace SpaceInvaders.ViewModel
                     }
                 }
 
+                // ERRROR
                 foreach (Alien alien in EnemyAlienGrid)
                 {
                     if (alien.Y >= player.playerYcord)
                     {
                         // LOSING CONDITIONS
-                        killBoltsToRemove.Clear();
-                        BoltsFired.Clear();
-                        EnemyShips.Clear();
-                        State.IsPlaying = false;
-                        State.GameOver = true;
+                        CheckForLoseConditions(killBoltsToRemove, alienKillBoltsToRemove);
                     }
 
                     if (DirectionLeft)
@@ -417,7 +419,6 @@ namespace SpaceInvaders.ViewModel
 
         public void SetPlayerLives()
         {
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             if (State.PlayerLives == 3)
             {
                 CanViewOne = true;
@@ -437,7 +438,6 @@ namespace SpaceInvaders.ViewModel
                CanViewThree = false;
             } else if (State.PlayerLives == -1)
             {
-                Debug.WriteLine("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
                 State.GameOver = true;
                 State.IsPlaying = false;
             }
@@ -449,7 +449,20 @@ namespace SpaceInvaders.ViewModel
             BoltsFired.Clear();
             EnemyAlienGrid.Clear();
             EnemyShips.Clear();
+            EnemyBoltsFired.Clear();
+            AttackingAliens.Clear();
             State.IsPlaying = false;
+        }        
+        public void CheckForLoseConditions(List <Bolt> killBoltsToRemove, List <EnemyAttack> alienKillBoltsToRemove)
+        {
+            // LOSE GAME CONDITIONS
+            killBoltsToRemove.Clear();
+            BoltsFired.Clear();
+            EnemyShips.Clear();
+            EnemyBoltsFired.Clear();
+            alienKillBoltsToRemove.Clear();
+            State.IsPlaying = false;
+            State.GameOver = true;
         }
     }
 }
