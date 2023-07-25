@@ -19,7 +19,6 @@ namespace SpaceInvaders
         // Score
         public int FinishingScore { get; set; } = 0;
         public int EndOfLevelScore { get; set; } = 0;
-        public int ShipTimeInterval { get; set; } = 5;
 
         // Weapons and shield
         public int PlayerLasersOwned { get; set; } = 3;
@@ -33,5 +32,8 @@ namespace SpaceInvaders
         // Player life
         public int PlayerLives { get; set; } = 1;
         public int MaxPlayerLives { get; set; } = 3;
+
+        // Conditional weapons available
+        public bool HasWeaponUpgrade { get; set; } = false;
     }
 }

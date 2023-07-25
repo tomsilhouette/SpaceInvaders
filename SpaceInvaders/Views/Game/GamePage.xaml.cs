@@ -61,7 +61,6 @@ public partial class GamePage : ContentPage
         bgGen.GenBg(State.CurrentLevel, canvas, start, end, randomNumbers);
     }
 
-
     // Player moves
     private void RightButton_Clicked(object sender, EventArgs e)
     {
