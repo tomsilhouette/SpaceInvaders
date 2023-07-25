@@ -30,7 +30,7 @@ namespace SpaceInvaders
         public int ExtraLifeCost { get; set; } = 25;
 
         // Player life
-        public int PlayerLives { get; set; } = 1;
+        public int PlayerLives { get; set; } = 3;
         public int MaxPlayerLives { get; set; } = 3;
 
         // Conditional weapons available

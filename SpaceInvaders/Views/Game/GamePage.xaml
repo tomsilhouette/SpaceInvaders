@@ -14,19 +14,22 @@
                 >
         </skia:SKCanvasView>
 
-        <HorizontalStackLayout x:Name="LivesContainer" HorizontalOptions="Start" VerticalOptions="Start" Margin="10,10,0,0">
+        <HorizontalStackLayout x:Name="LivesContainer" HorizontalOptions="Start" VerticalOptions="Start" Margin="10,10,0,0" >
             
             <Image Source="heart.png"
                          WidthRequest="25"
-                         HeightRequest="25"/>
+                         HeightRequest="25"
+                         IsVisible="{Binding CanViewOne}"/>
             
             <Image Source="heart.png"
                          WidthRequest="25"
-                         HeightRequest="25"/>
+                         HeightRequest="25"
+                         IsVisible="{Binding CanViewTwo}"/>
             
             <Image Source="heart.png"
                          WidthRequest="25"
-                         HeightRequest="25"/>
+                         HeightRequest="25"
+                         IsVisible="{Binding CanViewThree}"/>
             
         </HorizontalStackLayout>
 

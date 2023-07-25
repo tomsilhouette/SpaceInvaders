@@ -76,4 +76,12 @@ public partial class GamePage : ContentPage
     {
         ViewModel.BoltsFired.Add(new Bolt(ViewModel.player.playerXcord + 50, ViewModel.player.playerYcord));
     }
+
+    public void ManagePlayerLives()
+    {
+        for(int i = 0; i < State.PlayerLives; i++)
+        {
+            Debug.WriteLine($"LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL {State.PlayerLives}");
+        }
+    }
 }

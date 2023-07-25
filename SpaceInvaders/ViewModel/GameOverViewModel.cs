@@ -39,7 +39,7 @@ namespace SpaceInvaders.ViewModel
         [RelayCommand]
         async Task PostToHighScores()
         {
-            Database.PostNewHighScore(Username, State.FinishingScore);
+            await Database.PostNewHighScore(Username, State.FinishingScore);
             SubmitBtn = "Score Posted!";
             Username = "";
         }        

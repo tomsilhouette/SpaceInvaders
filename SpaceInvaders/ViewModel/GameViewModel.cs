@@ -2,6 +2,7 @@
 using Microsoft.Maui.Controls.Shapes;
 using SkiaSharp;
 using SpaceInvaders.Enemies;
+using SpaceInvaders.Views.Game;
 using SpaceInvaders.Weapons;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -23,6 +24,15 @@ namespace SpaceInvaders.ViewModel
         
         [ObservableProperty]
         public string currentLevel;
+        
+        [ObservableProperty]
+        public bool canViewOne = true;    
+        
+        [ObservableProperty]
+        public bool canViewTwo = true; 
+        
+        [ObservableProperty]
+        public bool canViewThree = true;
 
         public Player.Player player = new Player.Player();
         public SKPaint PaintCom { get; set; }
@@ -51,10 +61,10 @@ namespace SpaceInvaders.ViewModel
 
         public bool DirectionLeft { get; set; } = true;
 
-        public GameViewModel(GameState state) 
+        public GameViewModel(GameState state)
         {
             State = state;
-        }        
+        } 
         public GameViewModel() 
         {
 
@@ -135,11 +145,17 @@ namespace SpaceInvaders.ViewModel
             var playerPos = mat.Invert().MapPoint(player.playerXcord, player.playerYcord);
             gameCanvas.DrawBitmap(playerBitmap, new SKPoint(playerPos.X, playerPos.Y), new SKPaint());
 
+            var playerRect = mat.Invert().MapRect(new SKRect(player.playerXcord - 2, player.playerYcord, player.playerXcord + 110, player.playerYcord + 100));
+            gameCanvas.DrawRect(playerRect, new SKPaint()
+            {
+                IsStroke = true,
+                Color = SKColors.Red
+            });
+
             GenerateRandomEnemyAttack();
             GenerateRandomEnemyShip();
 
-
-            if (EnemyAlienGrid.Count == 0)
+                if (EnemyAlienGrid.Count == 0)
             {
                 CheckForWinConditions();
             }
@@ -245,10 +261,6 @@ namespace SpaceInvaders.ViewModel
                         {
                             aliensToRemove.Add(alien);
                             killBoltsToRemove.Add(bolt);
-
-                            // Find and remove number from list
-                            var alienNum = alien.EnemyNumber;
-                            //EnemyAlienNumbersAvailable.Remove(alienNum);
                         }
                     }
                 }
@@ -276,10 +288,11 @@ namespace SpaceInvaders.ViewModel
                         Color = SKColors.Transparent
                     });
 
-                    if (alienAttackRect.Contains(playerPos))
+                    if (playerRect.Contains(alienAttackPos))
                     {
                         State.PlayerLives--;
                         alienKillBoltsToRemove.Add(enemyBolt);
+                        SetPlayerLives();
                     }
 
                     if (alienAttackPos.Y < 200)
@@ -357,7 +370,6 @@ namespace SpaceInvaders.ViewModel
                 for (int j = 0; j < State.NumberOfEnemiesPerRow; j++)
                 {
                     EnemyAlienGrid.Add(new Alien(enemyAlienCount, currentAlienXCord, currentAlienYCord));
-                    //EnemyAlienNumbersAvailable.Add(enemyAlienCount);
                     enemyAlienCount++;
                     currentAlienXCord += 150;
                 }
@@ -403,9 +415,32 @@ namespace SpaceInvaders.ViewModel
             CurrentLevel = levelNum.ToString().PadLeft(3, '0');
         }
 
-        public void SetplayerLives()
+        public void SetPlayerLives()
         {
-
+            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            if (State.PlayerLives == 3)
+            {
+                CanViewOne = true;
+                CanViewTwo = true;
+                CanViewThree = true;
+            } else if (State.PlayerLives == 2) {
+                CanViewOne = true;
+                CanViewTwo = true;
+                CanViewThree = false;
+            } else if (State.PlayerLives == 1) {
+               CanViewOne = true;
+               CanViewTwo = false;
+               CanViewThree = false;
+            } else if (State.PlayerLives == 0) {
+               CanViewOne = false;
+               CanViewTwo = false;
+               CanViewThree = false;
+            } else if (State.PlayerLives == -1)
+            {
+                Debug.WriteLine("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
+                State.GameOver = true;
+                State.IsPlaying = false;
+            }
         }       
         public void CheckForWinConditions()
         {
