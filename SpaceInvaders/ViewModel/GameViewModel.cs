@@ -6,6 +6,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Timers;
+using System.Threading.Tasks;
+
 using Timer = System.Timers.Timer;
 
 namespace SpaceInvaders.ViewModel
@@ -299,6 +301,7 @@ namespace SpaceInvaders.ViewModel
                 
                 foreach (EnemyAttack enemyBoltToRemove in alienKillBoltsToRemove)
                 {
+                    Debug.WriteLine("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
                     EnemyBoltsFired.Remove(enemyBoltToRemove);
                 }
 
@@ -369,13 +372,14 @@ namespace SpaceInvaders.ViewModel
         {
             foreach (EnemyAttack enemyBolt in EnemyBoltsFired)
             {
-               // float canvasHeight = canvasProp.DeviceClipBounds.Height;
+                float canvasHeight = gameCanvas.DeviceClipBounds.Height * 5;
 
+                //Debug.WriteLine($"CANVASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS {canvasHeight}");
                 // Add enemy bolt
                 int addMe = 10;
 
                 float newY = enemyBolt.attackYpos += addMe;
-
+                //Debug.WriteLine($"NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN {newY}");
                 var alienAttackPos = mat.Invert().MapPoint(enemyBolt.attackXpos, newY);
                 gameCanvas.DrawBitmap(enemyAlienAttackBitmap, alienAttackPos, new SKPaint());
 
@@ -393,9 +397,10 @@ namespace SpaceInvaders.ViewModel
                     alienKillBoltsToRemove.Add(enemyBolt);
                     SetPlayerLives();
                 }
-
+                //Debug.WriteLine($"alienAttackPos XXXXXXXXXXXXXXXXX {alienAttackPos.X}");
+                //Debug.WriteLine($"alienAttackPos YYYYYYYYYYYYYYYYY {alienAttackPos.Y}");
                 // FIXIXXX
-                if (alienAttackPos.Y < 200)
+                if (alienAttackPos.Y > canvasHeight)
                 {
                     alienKillBoltsToRemove.Add(enemyBolt);
                 }

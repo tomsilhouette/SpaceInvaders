@@ -34,7 +34,7 @@
         </HorizontalStackLayout>
 
         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-            
+
             <Label
                 Text="{Binding CurrentLevel}"
                 TextColor="White"
@@ -45,12 +45,9 @@
                 FontFamily="Seven Segment"
                 FontAttributes="Bold"
                 HorizontalOptions="Center" />
-            
+
         </VerticalStackLayout>
 
-
-
-        
         <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,10" Spacing="25">
             
             <Button

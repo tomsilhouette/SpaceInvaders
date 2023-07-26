@@ -8,7 +8,7 @@ namespace SpaceInvaders;
 public partial class MainPage : ContentPage
 {
     // Check for music 
-    private bool isMainMusicPlaying = false;
+    // private bool isMainMusicPlaying = false;
 
     // Instance of audioPlayer
     private IAudioManager audioManager;
@@ -18,7 +18,7 @@ public partial class MainPage : ContentPage
     public MainPage(IAudioManager audioManager, MainPageViewModel vm)
 	{
 		InitializeComponent();
-        this.audioManager = audioManager;
+        // this.audioManager = audioManager;
 
         BindingContext = ViewModel = vm;
     }
@@ -30,7 +30,7 @@ public partial class MainPage : ContentPage
 
         // Check music is not already playing on page loading
         // Otherwise it will play multiple times at once
-        if (!isMainMusicPlaying)
+/*        if (!isMainMusicPlaying)
         {
             Task.Factory.StartNew(async () =>
             {
@@ -38,20 +38,20 @@ public partial class MainPage : ContentPage
                 mainMusic.Play();
                 isMainMusicPlaying = true;
             });
-        }
+        }*/
     }
 
     private async void StartButton_Clicked(object sender, EventArgs e)
     {
-        var startingSound = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("Resources/Audio/shoot.wav"));
-        startingSound.Play();
+/*        var startingSound = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("Resources/Audio/shoot.wav"));
+        startingSound.Play();*/
         await AppShell.Current.GoToAsync("///GamePage");
     }
 
     private async void ShowHighScores_Clicked(object sender, EventArgs e)
     {
-        var highScoreSound = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("Resources/Audio/explosion.wav"));
-        highScoreSound.Play();
+/*        var highScoreSound = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("Resources/Audio/explosion.wav"));
+        highScoreSound.Play();*/
         await AppShell.Current.GoToAsync("///HighScoresPage");
     }
 
