@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Maui.Controls.Shapes;
 using SkiaSharp;
 using SpaceInvaders.Enemies;
-using SpaceInvaders.Views.Game;
 using SpaceInvaders.Weapons;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -16,7 +14,7 @@ namespace SpaceInvaders.ViewModel
     {
         private Timer aTimer;
 
-        Random random = new Random();
+        Random random = new ();
         public GameState State { get; set; }
 
         [ObservableProperty]
@@ -64,15 +62,7 @@ namespace SpaceInvaders.ViewModel
         public GameViewModel(GameState state)
         {
             State = state;
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
             CreateGameBitmaps();
         } 
         public GameViewModel() 
@@ -166,7 +156,7 @@ namespace SpaceInvaders.ViewModel
         // Draws every tick of the timer
         internal void DrawGame(SKCanvas gameCanvas)
         {
-           // Draw the image on the canvas
+            // Draw the image on the canvas
             var mat = SKMatrix.CreateScale(0.2f, 0.2f);
             gameCanvas.SetMatrix(mat);
 
@@ -316,7 +306,6 @@ namespace SpaceInvaders.ViewModel
                 {
                     EnemyShips.Remove(ship);
                 }
-
             }
         }
 
@@ -374,14 +363,13 @@ namespace SpaceInvaders.ViewModel
                     BoltsFired.Remove(boltToRemove);
                 }
             }
-
         }
 
         internal void GenerateEnemyAttacks(SKCanvas gameCanvas, SKMatrix mat, SKRect playerRect, List <EnemyAttack> alienKillBoltsToRemove)
         {
             foreach (EnemyAttack enemyBolt in EnemyBoltsFired)
             {
-                float canvasHeight = gameCanvas.DeviceClipBounds.Height;
+               // float canvasHeight = canvasProp.DeviceClipBounds.Height;
 
                 // Add enemy bolt
                 int addMe = 10;
@@ -406,6 +394,7 @@ namespace SpaceInvaders.ViewModel
                     SetPlayerLives();
                 }
 
+                // FIXIXXX
                 if (alienAttackPos.Y < 200)
                 {
                     alienKillBoltsToRemove.Add(enemyBolt);
@@ -432,7 +421,6 @@ namespace SpaceInvaders.ViewModel
                 {
                     Debug.WriteLine("CATCHCATCHCATCHCATCHCATCHCATCHCATCHCATCHCATCH");
                 }
-
             }
         }   
         
@@ -482,10 +470,9 @@ namespace SpaceInvaders.ViewModel
             }
         }     
         
+         // WIN GAME CONDITIONS
         public void CheckForWinConditions()
         {
-            // WIN GAME CONDITIONS
-
             BoltsFired.Clear();
             EnemyAlienGrid.Clear();
             EnemyShips.Clear();
@@ -494,14 +481,16 @@ namespace SpaceInvaders.ViewModel
             State.IsPlaying = false;
         }   
         
+         // LOSE GAME CONDITIONS
         public void CheckForLoseConditions(List <Bolt> killBoltsToRemove, List <EnemyAttack> alienKillBoltsToRemove)
         {
-            // LOSE GAME CONDITIONS
             killBoltsToRemove.Clear();
+            alienKillBoltsToRemove.Clear();
+
             BoltsFired.Clear();
             EnemyShips.Clear();
             EnemyBoltsFired.Clear();
-            alienKillBoltsToRemove.Clear();
+
             State.IsPlaying = false;
             State.GameOver = true;
         }

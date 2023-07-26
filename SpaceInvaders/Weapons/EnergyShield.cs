@@ -13,8 +13,8 @@ namespace SpaceInvaders.Weapons
 
         public float EnergyShieldXcord { get; set; } = 0;
         public float EnergyShieldYcord { get; set; } = 0;
+        // Runs for 
         public int EnergyShieldDurationInSeconds { get; set; } = 5;
-
 
         public EnergyShield(float energyShieldXcord, float energyShieldYcord)
         {

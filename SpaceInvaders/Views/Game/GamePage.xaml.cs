@@ -35,11 +35,6 @@ public partial class GamePage : ContentPage
         }
     }
 
-/*    protected override void OnDisappearing()
-    {
-        // init
-    }*/
-
     // Init canvas
     private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
     {
@@ -47,7 +42,7 @@ public partial class GamePage : ContentPage
         var canvas = surface.Canvas; // Assign the canvas to the property
         canvasView.IgnorePixelScaling = true;
 
-        canvas.Clear(SKColors.White);
+        canvas.Clear();
         DrawBackground(canvas, new SKPoint((float)canvasView.Width / 2.0f, 128), new SKPoint((float)canvasView.Width / 2.0f, 16));
         ViewModel.DrawGame(canvas);
     }
@@ -74,5 +69,4 @@ public partial class GamePage : ContentPage
     {
         ViewModel.FireWeapon();
     }
-
 }
