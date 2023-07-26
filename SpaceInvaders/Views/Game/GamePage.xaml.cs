@@ -12,18 +12,15 @@ public partial class GamePage : ContentPage
 {
     Random random = new Random();
     private GameViewModel ViewModel { get; set; }
-    private BackgroundGenerator bgGen { get; set; }
     public GameState State { get; set; }
 
-    int[] randomNumbers = new int[6];
+    readonly int[] randomNumbers = new int[6];
 
     public GamePage(GameViewModel viewModel, GameState state)
 	{
 		InitializeComponent();
-		Title = "Space Invaders From Space 1.1.0";
 
         BindingContext = ViewModel = viewModel;
-        bgGen = new BackgroundGenerator();
         State = state;
     }
 
@@ -38,10 +35,10 @@ public partial class GamePage : ContentPage
         }
     }
 
-    protected override void OnDisappearing()
+/*    protected override void OnDisappearing()
     {
         // init
-    }
+    }*/
 
     // Init canvas
     private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
@@ -58,30 +55,24 @@ public partial class GamePage : ContentPage
     // Draw background
     private void DrawBackground(SKCanvas canvas, SKPoint start, SKPoint end)
     {
+        BackgroundGenerator bgGen = new ();
         bgGen.GenBg(State.CurrentLevel, canvas, start, end, randomNumbers);
     }
 
     // Player moves
     private void RightButton_Clicked(object sender, EventArgs e)
     {
-        ViewModel.player.playerXcord += 100;
+        ViewModel.GoRight();
     }
 
     private void LeftButton_Clicked(object sender, EventArgs e)
     {
-        ViewModel.player.playerXcord -= 100;
+        ViewModel.GoLeft();
     }
 
     private void FireButton_Clicked(object sender, EventArgs e)
     {
-        ViewModel.BoltsFired.Add(new Bolt(ViewModel.player.playerXcord + 50, ViewModel.player.playerYcord));
+        ViewModel.FireWeapon();
     }
 
-    public void ManagePlayerLives()
-    {
-        for(int i = 0; i < State.PlayerLives; i++)
-        {
-            Debug.WriteLine($"LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL {State.PlayerLives}");
-        }
-    }
 }

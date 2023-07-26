@@ -43,6 +43,7 @@
                    Text="{Binding Username}"
                    x:Name="EntryContainer"
                    ReturnCommand="{Binding CloseKeyboardCommand}"
+                   MaxLength="12"
                    />
             
             <Button x:Name="SubmitScoreBtn" Text="{Binding SubmitBtn}" Margin="0,20,0,0" Command="{Binding PostToHighScoresCommand}" />

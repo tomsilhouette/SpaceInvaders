@@ -46,11 +46,11 @@ namespace SpaceInvaders.ViewModel
         private SKBitmap enemyAlienAttackBitmap;
 
         // Game Objects
-        public List<Alien> EnemyAlienGrid = new List<Alien>();
-        public List<Alien> AttackingAliens = new List<Alien>();
-        public List<Bolt> BoltsFired = new List<Bolt>();
-        public List<Ship> EnemyShips = new List<Ship>();
-        public List<EnemyAttack> EnemyBoltsFired = new List<EnemyAttack>();
+        public List<Alien> EnemyAlienGrid = new ();
+        public List<Alien> AttackingAliens = new ();
+        public List<Bolt> BoltsFired = new ();
+        public List<Ship> EnemyShips = new ();
+        public List<EnemyAttack> EnemyBoltsFired = new ();
 
         private int enemyAlienCount = 1;
         private int enemyShotTimer = 50;
@@ -64,10 +64,39 @@ namespace SpaceInvaders.ViewModel
         public GameViewModel(GameState state)
         {
             State = state;
+            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            CreateGameBitmaps();
         } 
         public GameViewModel() 
         {
 
+        }
+
+        private void CreateGameBitmaps()
+        {
+            // Add player
+            using var playerStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}{player.playerImagePath}");
+            playerBitmap = SKBitmap.Decode(playerStream);
+
+            // Add enemy ship
+            using var shipStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemyShip.png");
+            enemyShipBitmap = SKBitmap.Decode(shipStream);
+
+            // Add enemy attack bolts
+            using var enemyAttackStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemy_attack.png");
+            enemyAlienAttackBitmap = SKBitmap.Decode(enemyAttackStream).Resize(new SKImageInfo(200, 200), SKFilterQuality.Low);
+
+            // Add enemy aliens
+            using var alienStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemyAlien.png");
+            enemyAlienBitmap = SKBitmap.Decode(alienStream);
         }
 
         private void SetTimer()
@@ -91,10 +120,9 @@ namespace SpaceInvaders.ViewModel
             if (!State.IsPlaying)
             {
                 aTimer.Stop();
-               // enemyTimer.Stop();
+
                 player.playerXcord = 500;
                 player.playerYcord = 1750;
-
 
                 if (EnemyAlienGrid.Count > 0) 
                 {
@@ -113,6 +141,7 @@ namespace SpaceInvaders.ViewModel
             }
         }
 
+
         internal void StartGame()
         {
             SetLevelNumber();
@@ -125,12 +154,9 @@ namespace SpaceInvaders.ViewModel
 
             enemyShotTimer = 50;
             enemyShipTimer = 200;
+            enemyAlienCount = 1;
 
             State.IsPlaying = true;
-
-            // Add player
-            using var playerStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}{player.playerImagePath}");
-            playerBitmap = SKBitmap.Decode(playerStream);
 
             CreateGameAnimations();
 
@@ -154,7 +180,7 @@ namespace SpaceInvaders.ViewModel
             gameCanvas.DrawRect(playerRect, new SKPaint()
             {
                 IsStroke = true,
-                Color = SKColors.Red
+                Color = SKColors.Transparent
             });
 
             GenerateRandomEnemyAttack();
@@ -162,7 +188,6 @@ namespace SpaceInvaders.ViewModel
 
             if (EnemyAlienGrid.Count == 0)
             {
-                Debug.WriteLine("00000000000000000000000000000000000000000000000000000000000000000000");
                 CheckForWinConditions();
             }
             else 
@@ -172,11 +197,9 @@ namespace SpaceInvaders.ViewModel
                 List<Ship> shipsToRemove = new();
                 List<EnemyAttack> alienKillBoltsToRemove = new();
 
+
                 foreach (Ship ship in EnemyShips)
                 {
-                    using var shipStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemyShip.png");
-                    enemyShipBitmap = SKBitmap.Decode(shipStream);
-
                     var shipMap = mat.Invert().MapPoint(ship.X, ship.Y);
                     gameCanvas.DrawBitmap(enemyShipBitmap, shipMap, new SKPaint());
 
@@ -209,7 +232,6 @@ namespace SpaceInvaders.ViewModel
                     }
                 }
 
-                // ERRROR
                 foreach (Alien alien in EnemyAlienGrid)
                 {
                     if (alien.Y >= player.playerYcord)
@@ -265,43 +287,13 @@ namespace SpaceInvaders.ViewModel
                             killBoltsToRemove.Add(bolt);
                         }
                     }
-                }
+                }              
 
-                foreach (EnemyAttack enemyBolt in EnemyBoltsFired)
-                {
-                    float canvasHeight = gameCanvas.DeviceClipBounds.Height;
-
-                    // Add enemy bolt
-                    int addMe = 10;
-
-                    using var enemyAttackStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemy_attack.png");
-                    enemyAlienAttackBitmap = SKBitmap.Decode(enemyAttackStream).Resize(new SKImageInfo(200, 200), SKFilterQuality.Low);
-
-                    float newY = enemyBolt.attackYpos += addMe;
-
-                    var alienAttackPos = mat.Invert().MapPoint(enemyBolt.attackXpos, newY);
-                    gameCanvas.DrawBitmap(enemyAlienAttackBitmap, alienAttackPos, new SKPaint());
-
-                    var alienAttackRect = mat.Invert().MapRect(new SKRect(enemyBolt.attackXpos, newY + 5, enemyBolt.attackXpos + 30, newY + 30));
-
-                    gameCanvas.DrawRect(alienAttackRect, new SKPaint()
-                    {
-                        IsStroke = true,
-                        Color = SKColors.Transparent
-                    });
-
-                    if (playerRect.Contains(alienAttackPos))
-                    {
-                        State.PlayerLives--;
-                        alienKillBoltsToRemove.Add(enemyBolt);
-                        SetPlayerLives();
-                    }
-
-                    if (alienAttackPos.Y < 200)
-                    {
-                        alienKillBoltsToRemove.Add(enemyBolt);
-                    }
-                }
+                // Generate player attack bolts
+                GeneratePlayerAttacks(gameCanvas, mat);                
+                
+                // Generate enemy attack bolts
+                GenerateEnemyAttacks(gameCanvas, mat, playerRect, alienKillBoltsToRemove);
 
                 // Remove the bolts outside the foreach loop
                 foreach (Alien alienToRemove in aliensToRemove)
@@ -325,35 +317,6 @@ namespace SpaceInvaders.ViewModel
                     EnemyShips.Remove(ship);
                 }
 
-                if (BoltsFired.Count > 0)
-                {
-                    List<Bolt> boltsToRemove = new List<Bolt>();
-
-                    foreach (Bolt bolt in BoltsFired)
-                    {
-                        if (bolt.BoltYcord <= 0)
-                        {
-                            boltsToRemove.Add(bolt);
-                        }
-
-                        bolt.BoltYcord -= 40.0f;
-
-                        // Create the SKRect object
-                        SKRect rect = mat.Invert().MapRect(new SKRect(bolt.BoltXcord, bolt.BoltYcord, bolt.BoltXcord + bolt.BoltWidth, bolt.BoltYcord + bolt.BoltHeight));
-
-                        // Draw the rectangle
-                        gameCanvas.DrawRect(rect, new SKPaint()
-                        {
-                            Color = SKColors.AliceBlue
-                        });
-                    }
-
-                    // Remove the bolts outside the foreach loop
-                    foreach (Bolt boltToRemove in boltsToRemove)
-                    {
-                        BoltsFired.Remove(boltToRemove);
-                    }
-                }
             }
         }
 
@@ -378,25 +341,101 @@ namespace SpaceInvaders.ViewModel
 
                 currentAlienYCord += 100;
             }
-           
-            // Get enemy images
-            using var alienStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemyAlien.png");
-            enemyAlienBitmap = SKBitmap.Decode(alienStream);
         }
+
+        internal void GeneratePlayerAttacks(SKCanvas gameCanvas, SKMatrix mat)
+        {
+            if (BoltsFired.Count > 0)
+            {
+                List<Bolt> boltsToRemove = new ();
+
+                foreach (Bolt bolt in BoltsFired)
+                {
+                    if (bolt.BoltYcord <= 0)
+                    { 
+                        boltsToRemove.Add(bolt);
+                    }
+
+                    bolt.BoltYcord -= 40.0f;
+
+                    // Create the SKRect object
+                    SKRect rect = mat.Invert().MapRect(new SKRect(bolt.BoltXcord, bolt.BoltYcord, bolt.BoltXcord + bolt.BoltWidth, bolt.BoltYcord + bolt.BoltHeight));
+
+                    // Draw the rectangle
+                    gameCanvas.DrawRect(rect, new SKPaint()
+                    {
+                        Color = SKColors.AliceBlue
+                    });
+                }
+
+                // Remove the bolts outside the foreach loop
+                foreach (Bolt boltToRemove in boltsToRemove)
+                {
+                    BoltsFired.Remove(boltToRemove);
+                }
+            }
+
+        }
+
+        internal void GenerateEnemyAttacks(SKCanvas gameCanvas, SKMatrix mat, SKRect playerRect, List <EnemyAttack> alienKillBoltsToRemove)
+        {
+            foreach (EnemyAttack enemyBolt in EnemyBoltsFired)
+            {
+                float canvasHeight = gameCanvas.DeviceClipBounds.Height;
+
+                // Add enemy bolt
+                int addMe = 10;
+
+                float newY = enemyBolt.attackYpos += addMe;
+
+                var alienAttackPos = mat.Invert().MapPoint(enemyBolt.attackXpos, newY);
+                gameCanvas.DrawBitmap(enemyAlienAttackBitmap, alienAttackPos, new SKPaint());
+
+                var alienAttackRect = mat.Invert().MapRect(new SKRect(enemyBolt.attackXpos, newY + 5, enemyBolt.attackXpos + 30, newY + 30));
+
+                gameCanvas.DrawRect(alienAttackRect, new SKPaint()
+                {
+                    IsStroke = true,
+                    Color = SKColors.Transparent
+                });
+
+                if (playerRect.Contains(alienAttackPos))
+                {
+                    State.PlayerLives--;
+                    alienKillBoltsToRemove.Add(enemyBolt);
+                    SetPlayerLives();
+                }
+
+                if (alienAttackPos.Y < 200)
+                {
+                    alienKillBoltsToRemove.Add(enemyBolt);
+                }
+            }
+        }
+
         internal void GenerateRandomEnemyAttack()
         {
             if (enemyShotTimer > 60)
             {
                 // Find alien in row based on index
-                var alienFound = EnemyAlienGrid[random.Next(0, EnemyAlienGrid.Count - 1)];
+                try
+                {
+                    var alienFound = EnemyAlienGrid[random.Next(0, EnemyAlienGrid.Count - 1)];
 
-                // Create attack for alien
-                EnemyBoltsFired.Add(new EnemyAttack(alienFound.X, alienFound.Y));
+                    // Create attack for alien
+                    EnemyBoltsFired.Add(new EnemyAttack(alienFound.X, alienFound.Y));
 
-                // reset spawn timer
-                enemyShotTimer = 0;
+                    // reset spawn timer
+                    enemyShotTimer = 0;
+                } 
+                catch
+                {
+                    Debug.WriteLine("CATCHCATCHCATCHCATCHCATCHCATCHCATCHCATCHCATCH");
+                }
+
             }
-        }        
+        }   
+        
         internal void GenerateRandomEnemyShip()
         {
             if (enemyShipTimer >= 300)
@@ -441,7 +480,8 @@ namespace SpaceInvaders.ViewModel
                 State.GameOver = true;
                 State.IsPlaying = false;
             }
-        }       
+        }     
+        
         public void CheckForWinConditions()
         {
             // WIN GAME CONDITIONS
@@ -452,7 +492,8 @@ namespace SpaceInvaders.ViewModel
             EnemyBoltsFired.Clear();
             AttackingAliens.Clear();
             State.IsPlaying = false;
-        }        
+        }   
+        
         public void CheckForLoseConditions(List <Bolt> killBoltsToRemove, List <EnemyAttack> alienKillBoltsToRemove)
         {
             // LOSE GAME CONDITIONS
@@ -463,6 +504,21 @@ namespace SpaceInvaders.ViewModel
             alienKillBoltsToRemove.Clear();
             State.IsPlaying = false;
             State.GameOver = true;
+        }
+
+        public void FireWeapon()
+        {
+            BoltsFired.Add(new Bolt(player.playerXcord + 50, player.playerYcord));
+        }    
+        
+        public void GoLeft()
+        {
+            player.playerXcord -= 100;
+        }   
+        
+        public void GoRight()
+        {
+            player.playerXcord += 100;
         }
     }
 }

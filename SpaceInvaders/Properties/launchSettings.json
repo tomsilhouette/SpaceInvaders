@@ -3,6 +3,12 @@
     "Windows Machine": {
       "commandName": "MsixPackage",
       "nativeDebugging": false
+    },
+    "Profile 3": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\tbrockington\\source\\repos\\SpaceInvaders",
+      "nativeDebugging": true,
+      "authenticationMode": "None"
     }
   }
 }

@@ -47,6 +47,20 @@
                 HorizontalOptions="Center" />
             
         </VerticalStackLayout>
+
+        <VerticalStackLayout HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,25,0" Spacing="25">
+            
+            <Image Source="heart.png"
+                         WidthRequest="40"
+                         HeightRequest="40"
+                         />
+
+            <Image Source="heart.png"
+                         WidthRequest="40"
+                         HeightRequest="40"
+                         />
+            
+        </VerticalStackLayout>
         
         <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,10" Spacing="25">
             
