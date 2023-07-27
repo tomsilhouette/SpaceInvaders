@@ -7,10 +7,12 @@ namespace SpaceInvaders.ViewModel
     public partial class UpgradesViewModel : ObservableObject
     {
         public GameState State { get; set; }
+        public GameViewModel GameViewModel { get; set; }
 
-        public UpgradesViewModel(GameState state) 
+        public UpgradesViewModel(GameState state, GameViewModel gameViewModel) 
         { 
             State = state;
+            GameViewModel = gameViewModel;
         }
 
         // BUY LASER
@@ -21,7 +23,7 @@ namespace SpaceInvaders.ViewModel
             {
                 Debug.WriteLine("LAZZZZZZZZZZZER");
                 State.PlayerLasersOwned++;
-                State.FinishingScore -= State.LaserCost;
+                State.FinishingScore -= State.LaserCost;           
             }
             else
             {
@@ -33,9 +35,29 @@ namespace SpaceInvaders.ViewModel
         [RelayCommand]
         private void PurchaseLives()
         {
-            if (State.FinishingScore >= State.ExtraLifeCost && State.PlayerLasersOwned < State.MaxPlayerLives)
+            Debug.WriteLine("LIFFFFFFFFE");
+            // If not greater than max lives and has the cash
+            if (State.FinishingScore >= State.ExtraLifeCost && State.PlayerLives < State.MaxPlayerLives)
             {
-                Debug.WriteLine("LIFFFFFFFFE");
+                Debug.WriteLine("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+                if (State.PlayerLives == 0)
+                {
+                    GameViewModel.CanViewOne = true;
+                    GameViewModel.CanViewTwo = false;
+                    GameViewModel.CanViewThree = false;
+                }
+                else if (State.PlayerLives == 1)
+                {
+                    GameViewModel.CanViewOne = true;
+                    GameViewModel.CanViewTwo = true;
+                    GameViewModel.CanViewThree = false;
+                }
+                else if (State.PlayerLives == 2)
+                {
+                    GameViewModel.CanViewOne = true;
+                    GameViewModel.CanViewTwo = true;
+                    GameViewModel.CanViewThree = true;
+                }
                 State.PlayerLives++;
                 State.FinishingScore -= State.ExtraLifeCost;
             }

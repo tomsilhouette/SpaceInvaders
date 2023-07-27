@@ -35,7 +35,6 @@ namespace SpaceInvaders.ViewModel
         public bool canViewThree = true;
 
         public Player.Player player = new ();
-        // public Player.Player Player { get; set; }
         public SKPaint PaintCom { get; set; }
 
         public SKCanvas gameCanvas;
@@ -47,6 +46,7 @@ namespace SpaceInvaders.ViewModel
         private SKBitmap enemyAlienBitmap;
         private SKBitmap enemyShipBitmap;
         private SKBitmap enemyAlienAttackBitmap;
+        private SKBitmap explosionBitmap;
 
         // Game Objects
         public List<Alien> EnemyAlienGrid = new ();
@@ -56,10 +56,13 @@ namespace SpaceInvaders.ViewModel
         public List<EnemyAttack> EnemyBoltsFired = new ();
 
         private int enemyAlienCount = 1;
+
         private int enemyShotTimer = 50;
         private int enemyShipTimer = 200;
-        private int enemyMovementSpeedXCoord = 5;
-        private int enemyMovementSpeedYCoord = 60;
+        private int playerAttackTimer = 10;
+
+        private int enemyMovementSpeedXCoord = 4;
+        private int enemyMovementSpeedYCoord = 40;
 
         private float deviceCanvasWidth;
         private float deviceCanvasHeight;
@@ -75,13 +78,36 @@ namespace SpaceInvaders.ViewModel
         public GameViewModel(GameState state)
         {
             State = state;
-
-            CreateGameBitmaps();
             State.GameOver = false;
+
+            CheckScreenSize();
+            CreateGameBitmaps();
         } 
         public GameViewModel() 
         {
 
+        }
+
+        private void CheckScreenSize()
+        {
+            // Get the screen metrics
+            var metrics = DeviceDisplay.MainDisplayInfo;
+
+            // Access the screen size properties
+            double screenWidth = metrics.Width;
+            double screenHeight = metrics.Height;
+
+            Debug.WriteLine($"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW {screenWidth} {screenHeight}");
+
+            if (screenWidth > 1200)
+            {
+                enemyMovementSpeedXCoord = 10;
+                enemyMovementSpeedYCoord = 100;
+                State.MediumEnemySpeedXCoord = 14;
+                State.MediumEnemySpeedYCoord = 120;
+                State.LargeEnemySpeedXCoord = 25;
+                State.LargeEnemySpeedYCoord = 140;
+            }
         }
 
         private void CreateGameBitmaps()
@@ -96,7 +122,11 @@ namespace SpaceInvaders.ViewModel
 
             // Add enemy attack bolts
             using var enemyAttackStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemy_attack.png");
-            enemyAlienAttackBitmap = SKBitmap.Decode(enemyAttackStream).Resize(new SKImageInfo(200, 200), SKFilterQuality.Low);
+            enemyAlienAttackBitmap = SKBitmap.Decode(enemyAttackStream).Resize(new SKImageInfo(200, 200), SKFilterQuality.Low);            
+            
+            // Add explosion if hit
+            using var explosionStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemy_attack.png");
+            explosionBitmap = SKBitmap.Decode(explosionStream).Resize(new SKImageInfo(800, 800), SKFilterQuality.Low);
 
             // Add enemy aliens
             using var alienStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemyAlien.png");
@@ -130,6 +160,7 @@ namespace SpaceInvaders.ViewModel
 
             enemyShotTimer++;
             enemyShipTimer++;
+            playerAttackTimer--;
 
             if (!State.IsPlaying)
             {
@@ -197,7 +228,7 @@ namespace SpaceInvaders.ViewModel
             var playerPos = mat.Invert().MapPoint(player.playerXcord, player.playerYcord);
             gameCanvas.DrawBitmap(playerBitmap, new SKPoint(playerPos.X, playerPos.Y), new SKPaint());
 
-            var playerRect = mat.Invert().MapRect(new SKRect(player.playerXcord - 5, player.playerYcord, player.playerXcord + 110, player.playerYcord + 100));
+            var playerRect = mat.Invert().MapRect(new SKRect(player.playerXcord - 15, player.playerYcord, player.playerXcord + 100, player.playerYcord + 100));
             gameCanvas.DrawRect(playerRect, new SKPaint()
             {
                 IsStroke = true,
@@ -260,6 +291,7 @@ namespace SpaceInvaders.ViewModel
                     {
                         enemyMovementSpeedXCoord = State.MediumEnemySpeedXCoord; 
                         enemyMovementSpeedYCoord = State.MediumEnemySpeedYCoord;
+
                         if (alien.Y >= deviceCanvasHeight / 2) 
                         {
                             enemyMovementSpeedXCoord = State.LargeEnemySpeedXCoord; 
@@ -427,12 +459,16 @@ namespace SpaceInvaders.ViewModel
 
                 if (playerRect.Contains(alienAttackPos))
                 {
+                    var explosionPos = mat.Invert().MapPoint(enemyBolt.attackXpos, newY);
+                    gameCanvas.DrawBitmap(explosionBitmap, explosionPos, new SKPaint());
+
                     State.PlayerLives--;
                     alienKillBoltsToRemove.Add(enemyBolt);
                     SetPlayerLives();
+
+                    gameCanvas.DrawBitmap(explosionBitmap, explosionPos, new SKPaint());
                 }
 
-                // FIXIXXX
                 if (alienAttackPos.Y > deviceCanvasHeight * 5)
                 {
                     alienKillBoltsToRemove.Add(enemyBolt);
@@ -535,7 +571,12 @@ namespace SpaceInvaders.ViewModel
 
         public void FireWeapon()
         {
-            BoltsFired.Add(new Bolt(player.playerXcord + 50, player.playerYcord));
+            if (playerAttackTimer <= 0)
+            {
+                BoltsFired.Add(new Bolt(player.playerXcord + 50, player.playerYcord));
+            }
+
+            playerAttackTimer = 7;
         }    
         
         public void GoLeft()

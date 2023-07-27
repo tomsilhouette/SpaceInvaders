@@ -1,20 +1,13 @@
 using Plugin.Maui.Audio;
 using SpaceInvaders.ViewModel;
-using Microsoft.Maui.Controls;
 using System.Diagnostics;
-using System.Linq;
-using Microsoft.Maui.Graphics;
 using SpaceInvaders.Models;
-using System;
-using SpaceInvaders.Controls;
-using Microsoft.Maui.Graphics.Text;
-using Microsoft.Maui;
 
 namespace SpaceInvaders.Views.HighScores
 {
     public partial class HighScoresPage : ContentPage
     {
-        private IAudioManager audioManager;
+        private IAudioManager AudioManager;
 
         private readonly HighScoresViewModel vm;
         public Database Database { get; set; }
@@ -25,7 +18,7 @@ namespace SpaceInvaders.Views.HighScores
             Database = database;
             InitializeComponent();
 
-            this.audioManager = audioManager;
+            AudioManager = audioManager;
             vm = (HighScoresViewModel) BindingContext;
         }
 
@@ -36,7 +29,6 @@ namespace SpaceInvaders.Views.HighScores
 
             foreach (User user in Database.HighScoresList.Take(10))
             {
-
                 Color textColor;
                 int largestFontSize = 32;
                 int largerFontSize = 28;
@@ -63,12 +55,11 @@ namespace SpaceInvaders.Views.HighScores
                 }
                 else
                 {
-                    // Default color for other items
-                    textColor = Color.FromHex("#000000"); // Black color
+                    textColor = Color.FromHex("#000000"); // Bronze color
                     fontSize = 22;
                 }
 
-                Label userLabel = new Label()
+                Label userLabel = new ()
                 {
                     Text = user.Username,
                     FontSize = fontSize,
@@ -76,7 +67,7 @@ namespace SpaceInvaders.Views.HighScores
                     FontAttributes = FontAttributes.Bold,
                 };
 
-                Label scoreLabel = new Label()
+                Label scoreLabel = new ()
                 {
                     Text = user.Score.ToString(),
                     FontSize = fontSize,
@@ -94,12 +85,12 @@ namespace SpaceInvaders.Views.HighScores
             {
                 for (int i = 0; i < MissingScoreContainers; i++)
                 {
-                    Label userLabel = new Label()
+                    Label userLabel = new()
                     {
                         Text = "",
                     };
 
-                    Label scoreLabel = new Label()
+                    Label scoreLabel = new()
                     {
                         Text = "",
                     };
@@ -114,7 +105,7 @@ namespace SpaceInvaders.Views.HighScores
 
         private async void GoBackToMain_Clicked(object sender, EventArgs e)
         {
-            var navigateSound = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("Resources/Audio/explosion.wav"));
+            var navigateSound = AudioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("Resources/Audio/explosion.wav"));
             navigateSound.Play();
             await AppShell.Current.GoToAsync("///MainPage");
         }

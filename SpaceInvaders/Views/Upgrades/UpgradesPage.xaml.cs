@@ -20,13 +20,13 @@ public partial class UpgradesPage : ContentPage
 
     private async void BackToPage_Clicked(object sender, EventArgs e)
     {
-        if (!State.GameOver)
+        if (State.GameOver)
         { 
-            await AppShell.Current.GoToAsync("///LevelCompletePage");
+            await AppShell.Current.GoToAsync("///MainPage");
         }
         else
         {
-            await AppShell.Current.GoToAsync("///MainPage");
+            await AppShell.Current.GoToAsync("///LevelCompletePage");
         }
     }
 }
