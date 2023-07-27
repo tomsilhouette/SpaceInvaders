@@ -58,9 +58,14 @@ namespace SpaceInvaders.ViewModel
         private int enemyAlienCount = 1;
         private int enemyShotTimer = 50;
         private int enemyShipTimer = 200;
+        private int enemyMovementSpeedXCoord = 5;
+        private int enemyMovementSpeedYCoord = 60;
 
         private float deviceCanvasWidth;
         private float deviceCanvasHeight;
+
+        private float smallDeviceCanvasWidth = 1100;
+        private float smallDeviceCanvasHeight = 2222;
 
         public event EventHandler TickEvent;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -72,6 +77,7 @@ namespace SpaceInvaders.ViewModel
             State = state;
 
             CreateGameBitmaps();
+            State.GameOver = false;
         } 
         public GameViewModel() 
         {
@@ -177,7 +183,7 @@ namespace SpaceInvaders.ViewModel
             var mat = SKMatrix.CreateScale(0.2f, 0.2f);
             gameCanvas.SetMatrix(mat);
 
-            if (deviceCanvasWidth > 1100)
+            if (deviceCanvasWidth > smallDeviceCanvasWidth)
             {
                 player.playerYcord = deviceCanvasHeight - (deviceCanvasHeight / 9.0f);
             }
@@ -247,8 +253,20 @@ namespace SpaceInvaders.ViewModel
                     }
                 }
 
+                // TODO
                 foreach (Alien alien in EnemyAlienGrid)
                 {
+                    if (alien.Y >= deviceCanvasHeight / 3 && alien.Y <= deviceCanvasHeight / 2) 
+                    {
+                        enemyMovementSpeedXCoord = State.MediumEnemySpeedXCoord; 
+                        enemyMovementSpeedYCoord = State.MediumEnemySpeedYCoord;
+                        if (alien.Y >= deviceCanvasHeight / 2) 
+                        {
+                            enemyMovementSpeedXCoord = State.LargeEnemySpeedXCoord; 
+                            enemyMovementSpeedYCoord = State.LargeEnemySpeedYCoord;
+                        }
+                    }                    
+
                     if (alien.Y >= player.playerYcord)
                     {
                         // LOSING CONDITIONS
@@ -261,21 +279,21 @@ namespace SpaceInvaders.ViewModel
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
-                                alien2.Y += 60;
+                                alien2.Y += enemyMovementSpeedYCoord;
                             }
                             DirectionLeft = false;
                         }
-                        alien.X += 5;
+                        alien.X += enemyMovementSpeedXCoord;
 
                     } else {
 
-                        alien.X -= 5;
+                        alien.X -= enemyMovementSpeedXCoord;
 
                         if (alien.X <= 0)
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
-                                alien2.Y += 60;
+                                alien2.Y += enemyMovementSpeedYCoord;
                             }
                             DirectionLeft = true;
                         }

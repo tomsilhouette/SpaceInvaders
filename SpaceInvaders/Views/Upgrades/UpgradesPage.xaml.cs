@@ -29,5 +29,4 @@ public partial class UpgradesPage : ContentPage
             await AppShell.Current.GoToAsync("///MainPage");
         }
     }
-
 }

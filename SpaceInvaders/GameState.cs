@@ -9,12 +9,16 @@ namespace SpaceInvaders
         public int NumberOfEnemiesPerRow { get; } = 6;
         public int NumberOfRowsOfEnemies { get; } = 5;
         public int StartingEnemySpeed { get; set; } = 1;
+        public int MediumEnemySpeedXCoord { get; set; } = 10;
+        public int MediumEnemySpeedYCoord { get; set; } = 100;        
+        public int LargeEnemySpeedXCoord { get; set; } = 15;
+        public int LargeEnemySpeedYCoord { get; set; } = 130;
         public int CurrentLevel { get; set; } = 0;
         public int FinishLevel { get; set; } = 0;
 
         // Game in progress? 
         public bool IsPlaying { get; set; } = false;
-        public bool GameOver { get; set; } = false;
+        public bool GameOver { get; set; } = true;
 
         // Score
         public int FinishingScore { get; set; } = 0;
@@ -38,7 +42,5 @@ namespace SpaceInvaders
 
         // Alien Attack speeds
         public int EnemyAttackSpeed { get; set; } = 25;
-
     }
-
 }
