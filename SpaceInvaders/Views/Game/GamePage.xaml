@@ -7,7 +7,6 @@
              xmlns:viewModels="clr-namespace:SpaceInvaders.ViewModel"
              x:DataType="viewModels:GameViewModel"
              Title="">
-     
     <Grid RowDefinitions="*">
         <skia:SKCanvasView Grid.Row="0" x:Name="canvasView" 
                 PaintSurface="OnPaintSurface"
@@ -48,36 +47,42 @@
 
         </VerticalStackLayout>
 
-        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,10" Spacing="25">
+        <Grid VerticalOptions="End" ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="10">
             
             <Button
                     x:Name="LeftButton"
                     Text="Left"
+                    TextColor="White"
+                    Grid.Column="0"
+                    FontSize="22"
+                    BackgroundColor="BlueViolet"
                     Clicked="LeftButton_Clicked"
                     SemanticProperties.Hint="Go Left"
-                    WidthRequest="100"
-                    HeightRequest="50"
-                    HorizontalOptions="Center" />
+                    HeightRequest="75"/>
             
             <Button
                     x:Name="FireButton"
                     Text="Fire"
+                    TextColor="White"
+                    FontSize="22"
                     Clicked="FireButton_Clicked"
+                    Grid.Column="1"
+                    BackgroundColor="BlueViolet"
                     SemanticProperties.Hint="Fire Weapons"
-                    WidthRequest="100"
-                    HeightRequest="50"
-                    HorizontalOptions="Center" />
+                    HeightRequest="75" />
 
             <Button
                     x:Name="RightButton"
                     Text="Right"
+                    TextColor="White"
+                    FontSize="22"
+                    Grid.Column="2"
+                    BackgroundColor="BlueViolet"
                     Clicked="RightButton_Clicked"
                     SemanticProperties.Hint="Go Right"
-                    WidthRequest="100"
-                    HeightRequest="50"
-                    HorizontalOptions="Center" />
+                    HeightRequest="75" />
             
-        </HorizontalStackLayout>
+        </Grid>
 
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
 

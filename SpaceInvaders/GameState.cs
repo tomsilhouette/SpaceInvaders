@@ -35,5 +35,10 @@ namespace SpaceInvaders
 
         // Conditional weapons available
         public bool HasWeaponUpgrade { get; set; } = false;
+
+        // Alien Attack speeds
+        public int EnemyAttackSpeed { get; set; } = 25;
+
     }
+
 }

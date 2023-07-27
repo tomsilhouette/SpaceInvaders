@@ -16,26 +16,29 @@ namespace SpaceInvaders.ViewModel
     {
         private Timer aTimer;
 
-        Random random = new ();
+        Random random = new();
         public GameState State { get; set; }
 
         [ObservableProperty]
-        public int currentScore;  
-        
+        public int currentScore;
+
         [ObservableProperty]
         public string currentLevel;
-        
+
         [ObservableProperty]
-        public bool canViewOne = true;    
-        
+        public bool canViewOne = true;
+
         [ObservableProperty]
-        public bool canViewTwo = true; 
-        
+        public bool canViewTwo = true;
+
         [ObservableProperty]
         public bool canViewThree = true;
 
-        public Player.Player player = new Player.Player();
+        public Player.Player player = new ();
+        // public Player.Player Player { get; set; }
         public SKPaint PaintCom { get; set; }
+
+        public SKCanvas gameCanvas;
 
         private readonly string imageSource = "SpaceInvaders.Resources.Images.";
 
@@ -55,6 +58,9 @@ namespace SpaceInvaders.ViewModel
         private int enemyAlienCount = 1;
         private int enemyShotTimer = 50;
         private int enemyShipTimer = 200;
+
+        private float deviceCanvasWidth;
+        private float deviceCanvasHeight;
 
         public event EventHandler TickEvent;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -91,6 +97,12 @@ namespace SpaceInvaders.ViewModel
             enemyAlienBitmap = SKBitmap.Decode(alienStream);
         }
 
+        public void SetDeviceDimensions()
+        {
+            deviceCanvasWidth = gameCanvas.DeviceClipBounds.Width;
+            deviceCanvasHeight = gameCanvas.DeviceClipBounds.Height;
+        }
+
         private void SetTimer()
         {
             // Create a timer with a two second interval.
@@ -100,6 +112,10 @@ namespace SpaceInvaders.ViewModel
             aTimer.Elapsed += OnTimedEvent;
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
+        }
+        public void SetCanvas(SKCanvas canvas)
+        {
+            gameCanvas = canvas;
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
@@ -156,13 +172,20 @@ namespace SpaceInvaders.ViewModel
         }
 
         // Draws every tick of the timer
-        internal void DrawGame(SKCanvas gameCanvas)
+        internal void DrawGame()
         {
-            // Draw the image on the canvas
             var mat = SKMatrix.CreateScale(0.2f, 0.2f);
             gameCanvas.SetMatrix(mat);
 
-            float canvasWidth = gameCanvas.DeviceClipBounds.Width;
+            if (deviceCanvasWidth > 1100)
+            {
+                player.playerYcord = deviceCanvasHeight - (deviceCanvasHeight / 9.0f);
+            }
+            else
+            {
+                player.playerYcord = deviceCanvasHeight - (deviceCanvasHeight / 6.0f);
+            }
+            // Draw the image on the canvas
 
             // Set player
             var playerPos = mat.Invert().MapPoint(player.playerXcord, player.playerYcord);
@@ -197,7 +220,7 @@ namespace SpaceInvaders.ViewModel
 
                     ship.X += 5;
 
-                    if (ship.X >= canvasWidth)
+                    if (ship.X >= deviceCanvasWidth)
                     {
                         shipsToRemove.Add(ship);
                     }
@@ -234,7 +257,7 @@ namespace SpaceInvaders.ViewModel
 
                     if (DirectionLeft)
                     {
-                        if (alien.X >= 950)
+                        if (alien.X >= deviceCanvasWidth - 150)
                         {
                             foreach (Alien alien2 in EnemyAlienGrid)
                             {
@@ -301,7 +324,6 @@ namespace SpaceInvaders.ViewModel
                 
                 foreach (EnemyAttack enemyBoltToRemove in alienKillBoltsToRemove)
                 {
-                    Debug.WriteLine("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
                     EnemyBoltsFired.Remove(enemyBoltToRemove);
                 }
 
@@ -372,14 +394,8 @@ namespace SpaceInvaders.ViewModel
         {
             foreach (EnemyAttack enemyBolt in EnemyBoltsFired)
             {
-                float canvasHeight = gameCanvas.DeviceClipBounds.Height * 5;
+                float newY = enemyBolt.attackYpos += State.EnemyAttackSpeed;
 
-                //Debug.WriteLine($"CANVASSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS {canvasHeight}");
-                // Add enemy bolt
-                int addMe = 10;
-
-                float newY = enemyBolt.attackYpos += addMe;
-                //Debug.WriteLine($"NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN {newY}");
                 var alienAttackPos = mat.Invert().MapPoint(enemyBolt.attackXpos, newY);
                 gameCanvas.DrawBitmap(enemyAlienAttackBitmap, alienAttackPos, new SKPaint());
 
@@ -397,10 +413,9 @@ namespace SpaceInvaders.ViewModel
                     alienKillBoltsToRemove.Add(enemyBolt);
                     SetPlayerLives();
                 }
-                //Debug.WriteLine($"alienAttackPos XXXXXXXXXXXXXXXXX {alienAttackPos.X}");
-                //Debug.WriteLine($"alienAttackPos YYYYYYYYYYYYYYYYY {alienAttackPos.Y}");
+
                 // FIXIXXX
-                if (alienAttackPos.Y > canvasHeight)
+                if (alienAttackPos.Y > deviceCanvasHeight * 5)
                 {
                     alienKillBoltsToRemove.Add(enemyBolt);
                 }
@@ -431,7 +446,7 @@ namespace SpaceInvaders.ViewModel
         
         internal void GenerateRandomEnemyShip()
         {
-            if (enemyShipTimer >= 300)
+            if (enemyShipTimer >= 300 && EnemyShips.Count == 0)
             {
                 CreateShipAndAddToCanvas();
                 enemyShipTimer = 0;

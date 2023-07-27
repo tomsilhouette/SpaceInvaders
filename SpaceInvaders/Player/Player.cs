@@ -11,8 +11,8 @@ namespace SpaceInvaders.Player
 {
     public class Player
     {
-        public int playerXcord { get; set; } = 500;
-        public int playerYcord { get; set; } = 1750;
+        public float playerXcord { get; set; } = 500.0f;
+        public float playerYcord { get; set; } = 1750.0f;
 
         // player image png for canvas to draw on load
         public string playerImagePath { get; set; } = "player.png";

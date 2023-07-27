@@ -43,8 +43,11 @@ public partial class GamePage : ContentPage
         canvasView.IgnorePixelScaling = true;
 
         canvas.Clear();
+        ViewModel.SetCanvas(canvas);
+        ViewModel.SetDeviceDimensions();
         DrawBackground(canvas, new SKPoint((float)canvasView.Width / 2.0f, 128), new SKPoint((float)canvasView.Width / 2.0f, 16));
-        ViewModel.DrawGame(canvas);
+
+        ViewModel.DrawGame();
     }
 
     // Draw background
