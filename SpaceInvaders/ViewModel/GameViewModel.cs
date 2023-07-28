@@ -205,12 +205,8 @@ namespace SpaceInvaders.ViewModel
             SetTimer();
         }
 
-        // Draws every tick of the timer
-        internal void DrawGame()
+        internal void SetDeviceSizes()
         {
-            var mat = SKMatrix.CreateScale(0.2f, 0.2f);
-            gameCanvas.SetMatrix(mat);
-
             if (deviceCanvasWidth > smallDeviceCanvasWidth)
             {
                 player.playerYcord = deviceCanvasHeight - (deviceCanvasHeight / 9.0f);
@@ -219,7 +215,15 @@ namespace SpaceInvaders.ViewModel
             {
                 player.playerYcord = deviceCanvasHeight - (deviceCanvasHeight / 6.0f);
             }
-            // Draw the image on the canvas
+        }
+
+        // Draws every tick of the timer
+        internal void DrawGame()
+        {
+            var mat = SKMatrix.CreateScale(0.2f, 0.2f);
+            gameCanvas.SetMatrix(mat);
+
+            SetDeviceSizes();
 
             // Set player
             var playerPos = mat.Invert().MapPoint(player.playerXcord, player.playerYcord);
