@@ -56,7 +56,7 @@
                     Grid.Column="0"
                     FontSize="22"
                     BackgroundColor="BlueViolet"
-                    Clicked="LeftButton_Clicked"
+                    Command="{Binding MovePlayerLeftCommand}"
                     SemanticProperties.Hint="Go Left"
                     HeightRequest="75"/>
             
@@ -65,7 +65,7 @@
                     Text="Fire"
                     TextColor="White"
                     FontSize="22"
-                    Clicked="FireButton_Clicked"
+                    Command="{Binding FirePlayerWeaponCommand}"
                     Grid.Column="1"
                     BackgroundColor="BlueViolet"
                     SemanticProperties.Hint="Fire Weapons"
@@ -77,15 +77,13 @@
                     TextColor="White"
                     FontSize="22"
                     Grid.Column="2"
+                    Command="{Binding MovePlayerRightCommand}"
                     BackgroundColor="BlueViolet"
-                    Clicked="RightButton_Clicked"
                     SemanticProperties.Hint="Go Right"
                     HeightRequest="75" />
-            
         </Grid>
 
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-
             <Label
                 Text="{Binding CurrentScore, StringFormat='Score: {0}'}"
                 TextColor="White"

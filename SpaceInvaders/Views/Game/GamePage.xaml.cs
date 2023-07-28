@@ -2,9 +2,6 @@ using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SpaceInvaders.Levels;
 using SpaceInvaders.ViewModel;
-using SpaceInvaders.Weapons;
-using Microsoft.Maui.Controls;
-using System.Diagnostics;
 
 namespace SpaceInvaders.Views.Game;
 
@@ -53,23 +50,7 @@ public partial class GamePage : ContentPage
     // Draw background
     private void DrawBackground(SKCanvas canvas, SKPoint start, SKPoint end)
     {
-        BackgroundGenerator bgGen = new ();
+        BackgroundGenerator bgGen = new();
         bgGen.GenBg(State.CurrentLevel, canvas, start, end, randomNumbers);
-    }
-
-    // Player moves
-    private void RightButton_Clicked(object sender, EventArgs e)
-    {
-        ViewModel.GoRight();
-    }
-
-    private void LeftButton_Clicked(object sender, EventArgs e)
-    {
-        ViewModel.GoLeft();
-    }
-
-    private void FireButton_Clicked(object sender, EventArgs e)
-    {
-        ViewModel.FireWeapon();
     }
 }

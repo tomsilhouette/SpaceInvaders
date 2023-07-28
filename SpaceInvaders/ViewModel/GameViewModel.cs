@@ -6,9 +6,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Timers;
-using System.Threading.Tasks;
-
 using Timer = System.Timers.Timer;
+using CommunityToolkit.Mvvm.Input;
 
 namespace SpaceInvaders.ViewModel
 {
@@ -96,8 +95,6 @@ namespace SpaceInvaders.ViewModel
             // Access the screen size properties
             double screenWidth = metrics.Width;
             double screenHeight = metrics.Height;
-
-            Debug.WriteLine($"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW {screenWidth} {screenHeight}");
 
             if (screenWidth > 1200)
             {
@@ -360,27 +357,34 @@ namespace SpaceInvaders.ViewModel
                 // Generate enemy attack bolts
                 GenerateEnemyAttacks(gameCanvas, mat, playerRect, alienKillBoltsToRemove);
 
-                // Remove the bolts outside the foreach loop
-                foreach (Alien alienToRemove in aliensToRemove)
-                {
-                    EnemyAlienGrid.Remove(alienToRemove);
-                    CurrentScore += alienToRemove.ScorePerKill;
-                }
+                // Remove all items from removal lists
+                ManageListRemovals(aliensToRemove, killBoltsToRemove, alienKillBoltsToRemove, shipsToRemove);
+            }
+        }
 
-                foreach (Bolt boltToRemove in killBoltsToRemove)
-                {
-                    BoltsFired.Remove(boltToRemove);
-                }        
-                
-                foreach (EnemyAttack enemyBoltToRemove in alienKillBoltsToRemove)
-                {
-                    EnemyBoltsFired.Remove(enemyBoltToRemove);
-                }
+        // Remove objects from lists
+        private void ManageListRemovals(List<Alien> aliensToRemove, List<Bolt> killBoltsToRemove, List<EnemyAttack> alienKillBoltsToRemove, List<Ship> shipsToRemove)
+        {
+            // Remove the bolts outside the foreach loop
+            foreach (Alien alienToRemove in aliensToRemove)
+            {
+                EnemyAlienGrid.Remove(alienToRemove);
+                CurrentScore += alienToRemove.ScorePerKill;
+            }
 
-                foreach (Ship ship in shipsToRemove)
-                {
-                    EnemyShips.Remove(ship);
-                }
+            foreach (Bolt boltToRemove in killBoltsToRemove)
+            {
+                BoltsFired.Remove(boltToRemove);
+            }
+
+            foreach (EnemyAttack enemyBoltToRemove in alienKillBoltsToRemove)
+            {
+                EnemyBoltsFired.Remove(enemyBoltToRemove);
+            }
+
+            foreach (Ship ship in shipsToRemove)
+            {
+                EnemyShips.Remove(ship);
             }
         }
 
@@ -569,24 +573,31 @@ namespace SpaceInvaders.ViewModel
             State.GameOver = true;
         }
 
-        public void FireWeapon()
+
+        // Go Left
+        [RelayCommand]
+        private void MovePlayerLeft()
+        {
+            player.playerXcord -= 100;
+        }        
+        
+        // Go Right
+        [RelayCommand]
+        private void MovePlayerRight()
+        {
+            player.playerXcord += 100;
+        }        
+        
+        // Fire
+        [RelayCommand]
+        private void FirePlayerWeapon()
         {
             if (playerAttackTimer <= 0)
             {
                 BoltsFired.Add(new Bolt(player.playerXcord + 50, player.playerYcord));
             }
 
-            playerAttackTimer = 7;
-        }    
-        
-        public void GoLeft()
-        {
-            player.playerXcord -= 100;
-        }   
-        
-        public void GoRight()
-        {
-            player.playerXcord += 100;
+            playerAttackTimer = 5;
         }
     }
 }

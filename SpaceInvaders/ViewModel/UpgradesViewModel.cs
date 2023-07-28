@@ -35,11 +35,9 @@ namespace SpaceInvaders.ViewModel
         [RelayCommand]
         private void PurchaseLives()
         {
-            Debug.WriteLine("LIFFFFFFFFE");
             // If not greater than max lives and has the cash
             if (State.FinishingScore >= State.ExtraLifeCost && State.PlayerLives < State.MaxPlayerLives)
             {
-                Debug.WriteLine("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
                 if (State.PlayerLives == 0)
                 {
                     GameViewModel.CanViewOne = true;
