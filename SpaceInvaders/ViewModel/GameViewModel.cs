@@ -237,6 +237,7 @@ namespace SpaceInvaders.ViewModel
             });
 
             GenerateRandomEnemyAttack();
+
             GenerateRandomEnemyShip();
 
             if (EnemyAlienGrid.Count == 0)
