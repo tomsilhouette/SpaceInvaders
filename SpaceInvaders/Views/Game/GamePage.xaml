@@ -6,14 +6,14 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              xmlns:viewModels="clr-namespace:SpaceInvaders.ViewModel"
              x:DataType="viewModels:GameViewModel"
-             Title="">
+             Title="Space Invaders 1.1.0">
     <Grid RowDefinitions="*">
         <skia:SKCanvasView Grid.Row="0" x:Name="canvasView" 
                 PaintSurface="OnPaintSurface"
                 >
         </skia:SKCanvasView>
 
-        <HorizontalStackLayout x:Name="LivesContainer" HorizontalOptions="Start" VerticalOptions="Start" Margin="10,10,0,0" >
+        <HorizontalStackLayout x:Name="LivesContainer" HorizontalOptions="Start" VerticalOptions="Start" Margin="10,10,0,0">
             
             <Image Source="heart.png"
                          WidthRequest="25"
@@ -84,6 +84,7 @@
         </Grid>
 
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            
             <Label
                 Text="{Binding CurrentScore, StringFormat='Score: {0}'}"
                 TextColor="White"

@@ -39,7 +39,7 @@
     <VerticalStackLayout>
         
         <Label 
-            Text="UPGRADES"
+            Text="UPGRADES CURRENTLY UNAVAILABLE"
             VerticalOptions="Center" 
             HorizontalOptions="Center"
             FontSize="22"

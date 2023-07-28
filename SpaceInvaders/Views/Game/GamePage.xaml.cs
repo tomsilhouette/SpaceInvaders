@@ -2,6 +2,8 @@ using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SpaceInvaders.Levels;
 using SpaceInvaders.ViewModel;
+using System.Diagnostics;
+using SkiaSharp.Views.Maui.Controls;
 
 namespace SpaceInvaders.Views.Game;
 
@@ -53,4 +55,5 @@ public partial class GamePage : ContentPage
         BackgroundGenerator bgGen = new();
         bgGen.GenBg(State.CurrentLevel, canvas, start, end, randomNumbers);
     }
+
 }

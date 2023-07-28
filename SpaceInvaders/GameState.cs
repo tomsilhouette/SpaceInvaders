@@ -8,9 +8,9 @@ namespace SpaceInvaders
         // Game Set up
         public int NumberOfEnemiesPerRow { get; } = 6;
         public int NumberOfRowsOfEnemies { get; } = 5;
-        public int MediumEnemySpeedXCoord { get; set; } = 5;
+        public int MediumEnemySpeedXCoord { get; set; } = 6;
         public int MediumEnemySpeedYCoord { get; set; } = 50;        
-        public int LargeEnemySpeedXCoord { get; set; } = 6;
+        public int LargeEnemySpeedXCoord { get; set; } = 8;
         public int LargeEnemySpeedYCoord { get; set; } = 60;
         public int CurrentLevel { get; set; } = 0;
         public int FinishLevel { get; set; } = 0;

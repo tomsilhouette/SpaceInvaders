@@ -251,7 +251,6 @@ namespace SpaceInvaders.ViewModel
                 List<Ship> shipsToRemove = new();
                 List<EnemyAttack> alienKillBoltsToRemove = new();
 
-
                 foreach (Ship ship in EnemyShips)
                 {
                     var shipMap = mat.Invert().MapPoint(ship.X, ship.Y);
@@ -286,7 +285,6 @@ namespace SpaceInvaders.ViewModel
                     }
                 }
 
-                // TODO
                 foreach (Alien alien in EnemyAlienGrid)
                 {
                     if (alien.Y >= deviceCanvasHeight / 3 && alien.Y <= deviceCanvasHeight / 2)
@@ -586,7 +584,6 @@ namespace SpaceInvaders.ViewModel
             State.IsPlaying = false;
             State.GameOver = true;
         }
-
 
         // Go Left
         [RelayCommand]
