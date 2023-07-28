@@ -15,6 +15,8 @@ public partial class GamePage : ContentPage
 
     readonly int[] randomNumbers = new int[6];
 
+    private float previousX;
+
     public GamePage(GameViewModel viewModel, GameState state)
 	{
 		InitializeComponent();
@@ -56,4 +58,30 @@ public partial class GamePage : ContentPage
         bgGen.GenBg(State.CurrentLevel, canvas, start, end, randomNumbers);
     }
 
+    private void CanvasView_Touch(object sender, SKTouchEventArgs e)
+    {
+        //Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+        switch (e.ActionType)
+        {
+            case SKTouchAction.Pressed:
+                previousX = e.Location.X;
+                break;
+
+            case SKTouchAction.Moved:
+                float deltaX = e.Location.X;
+                
+                    // Swipe right
+                    //MovePlayerRight();
+                    Debug.WriteLine($"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB {deltaX}");
+
+                ViewModel.MovePlayerSwipe( deltaX );
+
+                previousX = e.Location.X;
+                break;
+        }
+
+        e.Handled = true; // Set this to true if you've handled the touch event
+        canvasView.InvalidateSurface(); // Redraw the canvas if needed
+    }
 }

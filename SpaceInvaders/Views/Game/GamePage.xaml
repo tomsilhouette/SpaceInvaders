@@ -10,6 +10,8 @@
     <Grid RowDefinitions="*">
         <skia:SKCanvasView Grid.Row="0" x:Name="canvasView" 
                 PaintSurface="OnPaintSurface"
+                Touch="CanvasView_Touch"
+                EnableTouchEvents="True"
                 >
         </skia:SKCanvasView>
 

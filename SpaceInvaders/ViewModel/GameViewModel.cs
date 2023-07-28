@@ -599,6 +599,10 @@ namespace SpaceInvaders.ViewModel
             player.playerXcord += 100;
         }
 
+        public void MovePlayerSwipe(float deltaX)
+        {
+            player.playerXcord = deltaX * 5;
+        }
         // Fire
         [RelayCommand]
         private void FirePlayerWeapon()
