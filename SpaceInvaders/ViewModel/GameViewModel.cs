@@ -33,7 +33,7 @@ namespace SpaceInvaders.ViewModel
         [ObservableProperty]
         public bool canViewThree = true;
 
-        public Player.Player player = new ();
+        public Player.Player player = new();
         public SKPaint PaintCom { get; set; }
 
         public SKCanvas gameCanvas;
@@ -48,11 +48,11 @@ namespace SpaceInvaders.ViewModel
         private SKBitmap explosionBitmap;
 
         // Game Objects
-        public List<Alien> EnemyAlienGrid = new ();
-        public List<Alien> AttackingAliens = new ();
-        public List<Bolt> BoltsFired = new ();
-        public List<Ship> EnemyShips = new ();
-        public List<EnemyAttack> EnemyBoltsFired = new ();
+        public List<Alien> EnemyAlienGrid = new();
+        public List<Alien> AttackingAliens = new();
+        public List<Bolt> BoltsFired = new();
+        public List<Ship> EnemyShips = new();
+        public List<EnemyAttack> EnemyBoltsFired = new();
 
         private int enemyAlienCount = 1;
 
@@ -81,8 +81,8 @@ namespace SpaceInvaders.ViewModel
 
             CheckScreenSize();
             CreateGameBitmaps();
-        } 
-        public GameViewModel() 
+        }
+        public GameViewModel()
         {
 
         }
@@ -119,8 +119,8 @@ namespace SpaceInvaders.ViewModel
 
             // Add enemy attack bolts
             using var enemyAttackStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemy_attack.png");
-            enemyAlienAttackBitmap = SKBitmap.Decode(enemyAttackStream).Resize(new SKImageInfo(200, 200), SKFilterQuality.Low);            
-            
+            enemyAlienAttackBitmap = SKBitmap.Decode(enemyAttackStream).Resize(new SKImageInfo(200, 200), SKFilterQuality.Low);
+
             // Add explosion if hit
             using var explosionStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemy_attack.png");
             explosionBitmap = SKBitmap.Decode(explosionStream).Resize(new SKImageInfo(800, 800), SKFilterQuality.Low);
@@ -166,7 +166,7 @@ namespace SpaceInvaders.ViewModel
                 player.playerXcord = 500;
                 player.playerYcord = 1750;
 
-                if (EnemyAlienGrid.Count > 0) 
+                if (EnemyAlienGrid.Count > 0)
                 {
                     State.FinishingScore += CurrentScore;
 
@@ -239,7 +239,7 @@ namespace SpaceInvaders.ViewModel
             {
                 CheckForWinConditions();
             }
-            else 
+            else
             {
                 List<Alien> aliensToRemove = new();
                 List<Bolt> killBoltsToRemove = new();
@@ -284,17 +284,17 @@ namespace SpaceInvaders.ViewModel
                 // TODO
                 foreach (Alien alien in EnemyAlienGrid)
                 {
-                    if (alien.Y >= deviceCanvasHeight / 3 && alien.Y <= deviceCanvasHeight / 2) 
+                    if (alien.Y >= deviceCanvasHeight / 3 && alien.Y <= deviceCanvasHeight / 2)
                     {
-                        enemyMovementSpeedXCoord = State.MediumEnemySpeedXCoord; 
+                        enemyMovementSpeedXCoord = State.MediumEnemySpeedXCoord;
                         enemyMovementSpeedYCoord = State.MediumEnemySpeedYCoord;
 
-                        if (alien.Y >= deviceCanvasHeight / 2) 
+                        if (alien.Y >= deviceCanvasHeight / 2)
                         {
-                            enemyMovementSpeedXCoord = State.LargeEnemySpeedXCoord; 
+                            enemyMovementSpeedXCoord = State.LargeEnemySpeedXCoord;
                             enemyMovementSpeedYCoord = State.LargeEnemySpeedYCoord;
                         }
-                    }                    
+                    }
 
                     if (alien.Y >= player.playerYcord)
                     {
@@ -314,7 +314,9 @@ namespace SpaceInvaders.ViewModel
                         }
                         alien.X += enemyMovementSpeedXCoord;
 
-                    } else {
+                    }
+                    else
+                    {
 
                         alien.X -= enemyMovementSpeedXCoord;
 
@@ -341,7 +343,7 @@ namespace SpaceInvaders.ViewModel
 
                     foreach (Bolt bolt in BoltsFired)
                     {
-                        var boltPos = mat.Invert().MapPoint(bolt.BoltXcord, bolt.BoltYcord); 
+                        var boltPos = mat.Invert().MapPoint(bolt.BoltXcord, bolt.BoltYcord);
 
                         if (alienRect.Contains(boltPos))
                         {
@@ -349,11 +351,11 @@ namespace SpaceInvaders.ViewModel
                             killBoltsToRemove.Add(bolt);
                         }
                     }
-                }              
+                }
 
                 // Generate player attack bolts
-                GeneratePlayerAttacks(gameCanvas, mat);                
-                
+                GeneratePlayerAttacks(gameCanvas, mat);
+
                 // Generate enemy attack bolts
                 GenerateEnemyAttacks(gameCanvas, mat, playerRect, alienKillBoltsToRemove);
 
@@ -415,12 +417,12 @@ namespace SpaceInvaders.ViewModel
         {
             if (BoltsFired.Count > 0)
             {
-                List<Bolt> boltsToRemove = new ();
+                List<Bolt> boltsToRemove = new();
 
                 foreach (Bolt bolt in BoltsFired)
                 {
                     if (bolt.BoltYcord <= 0)
-                    { 
+                    {
                         boltsToRemove.Add(bolt);
                     }
 
@@ -444,7 +446,7 @@ namespace SpaceInvaders.ViewModel
             }
         }
 
-        internal void GenerateEnemyAttacks(SKCanvas gameCanvas, SKMatrix mat, SKRect playerRect, List <EnemyAttack> alienKillBoltsToRemove)
+        internal void GenerateEnemyAttacks(SKCanvas gameCanvas, SKMatrix mat, SKRect playerRect, List<EnemyAttack> alienKillBoltsToRemove)
         {
             foreach (EnemyAttack enemyBolt in EnemyBoltsFired)
             {
@@ -494,14 +496,14 @@ namespace SpaceInvaders.ViewModel
 
                     // reset spawn timer
                     enemyShotTimer = 0;
-                } 
+                }
                 catch
                 {
                     Debug.WriteLine("CATCHCATCHCATCHCATCHCATCHCATCHCATCHCATCHCATCH");
                 }
             }
-        }   
-        
+        }
+
         internal void GenerateRandomEnemyShip()
         {
             if (enemyShipTimer >= 300 && EnemyShips.Count == 0)
@@ -529,26 +531,33 @@ namespace SpaceInvaders.ViewModel
                 CanViewOne = true;
                 CanViewTwo = true;
                 CanViewThree = true;
-            } else if (State.PlayerLives == 2) {
+            }
+            else if (State.PlayerLives == 2)
+            {
                 CanViewOne = true;
                 CanViewTwo = true;
                 CanViewThree = false;
-            } else if (State.PlayerLives == 1) {
-               CanViewOne = true;
-               CanViewTwo = false;
-               CanViewThree = false;
-            } else if (State.PlayerLives == 0) {
-               CanViewOne = false;
-               CanViewTwo = false;
-               CanViewThree = false;
-            } else if (State.PlayerLives == -1)
+            }
+            else if (State.PlayerLives == 1)
+            {
+                CanViewOne = true;
+                CanViewTwo = false;
+                CanViewThree = false;
+            }
+            else if (State.PlayerLives == 0)
+            {
+                CanViewOne = false;
+                CanViewTwo = false;
+                CanViewThree = false;
+            }
+            else if (State.PlayerLives == -1)
             {
                 State.GameOver = true;
                 State.IsPlaying = false;
             }
-        }     
-        
-         // WIN GAME CONDITIONS
+        }
+
+        // WIN GAME CONDITIONS
         public void CheckForWinConditions()
         {
             BoltsFired.Clear();
@@ -557,10 +566,10 @@ namespace SpaceInvaders.ViewModel
             EnemyBoltsFired.Clear();
             AttackingAliens.Clear();
             State.IsPlaying = false;
-        }   
-        
-         // LOSE GAME CONDITIONS
-        public void CheckForLoseConditions(List <Bolt> killBoltsToRemove, List <EnemyAttack> alienKillBoltsToRemove)
+        }
+
+        // LOSE GAME CONDITIONS
+        public void CheckForLoseConditions(List<Bolt> killBoltsToRemove, List<EnemyAttack> alienKillBoltsToRemove)
         {
             killBoltsToRemove.Clear();
             alienKillBoltsToRemove.Clear();
@@ -579,15 +588,15 @@ namespace SpaceInvaders.ViewModel
         private void MovePlayerLeft()
         {
             player.playerXcord -= 100;
-        }        
-        
+        }
+
         // Go Right
         [RelayCommand]
         private void MovePlayerRight()
         {
             player.playerXcord += 100;
-        }        
-        
+        }
+
         // Fire
         [RelayCommand]
         private void FirePlayerWeapon()
