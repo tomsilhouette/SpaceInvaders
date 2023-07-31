@@ -10,7 +10,6 @@
     <Grid RowDefinitions="*">
         <skia:SKCanvasView Grid.Row="0" x:Name="canvasView" 
                 PaintSurface="OnPaintSurface"
-                Touch="CanvasView_Touch"
                 EnableTouchEvents="True"
                 >
         </skia:SKCanvasView>
@@ -50,7 +49,18 @@
         </VerticalStackLayout>
 
         <Grid VerticalOptions="End" ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="10">
-
+            
+            <Button
+                    x:Name="LeftButton"
+                    Text="Left"
+                    TextColor="White"
+                    Grid.Column="0"
+                    FontSize="22"
+                    BackgroundColor="BlueViolet"
+                    Command="{Binding MovePlayerLeftCommand}"
+                    SemanticProperties.Hint="Go Left"
+                    HeightRequest="75"/>
+            
             <Button
                     x:Name="FireButton"
                     Text="Fire"
@@ -60,6 +70,17 @@
                     Grid.Column="1"
                     BackgroundColor="BlueViolet"
                     SemanticProperties.Hint="Fire Weapons"
+                    HeightRequest="75" />
+
+            <Button
+                    x:Name="RightButton"
+                    Text="Right"
+                    TextColor="White"
+                    FontSize="22"
+                    Grid.Column="2"
+                    Command="{Binding MovePlayerRightCommand}"
+                    BackgroundColor="BlueViolet"
+                    SemanticProperties.Hint="Go Right"
                     HeightRequest="75" />
 
         </Grid>

@@ -56,7 +56,7 @@ public partial class GamePage : ContentPage
         bgGen.GenBg(State.CurrentLevel, canvas, start, end, randomNumbers);
     }
 
-    private void CanvasView_Touch(object sender, SKTouchEventArgs e)
+/*    private void CanvasView_Touch(object sender, SKTouchEventArgs e)
     {
         switch (e.ActionType)
         {
@@ -70,5 +70,5 @@ public partial class GamePage : ContentPage
 
         e.Handled = true; // Set this to true if you've handled the touch event
         canvasView.InvalidateSurface(); // Redraw the canvas if needed
-    }
+    }*/
 }

@@ -105,7 +105,6 @@ namespace SpaceInvaders.ViewModel
                 State.MediumEnemySpeedYCoord = 120;
                 State.LargeEnemySpeedXCoord = 25;
                 State.LargeEnemySpeedYCoord = 140;
-                CurrentScore = 88888;
             }
         }
 
@@ -184,7 +183,6 @@ namespace SpaceInvaders.ViewModel
             if (!State.IsPlaying)
             {
                 aTimer.Stop();
-                ResetScreenSpeeds();
 
                 player.playerXcord = 500;
                 player.playerYcord = 1750;
@@ -523,7 +521,7 @@ namespace SpaceInvaders.ViewModel
                     // reset spawn timer
                     enemyShotTimer = 0;
                 }
-                catch {}
+                catch { }
             }
         }
 
@@ -605,10 +603,25 @@ namespace SpaceInvaders.ViewModel
             State.GameOver = true;
         }
 
-
+/*
         public void MovePlayerSwipe(float deltaX)
         {
             player.playerXcord = deltaX * ScreenSizeDelta;
+        }*/
+
+        // Go Left
+        [RelayCommand]
+        private void MovePlayerLeft()
+        {
+            player.playerXcord -= 100;
+        }
+
+
+        // Go Right
+        [RelayCommand]
+        private void MovePlayerRight()
+        {
+            player.playerXcord += 100;
         }
 
         // Fire
@@ -621,6 +634,6 @@ namespace SpaceInvaders.ViewModel
             }
 
             playerAttackTimer = 5;
-        }        
+        }   
     }
 }
