@@ -60,17 +60,18 @@ namespace SpaceInvaders.ViewModel
         private int enemyShipTimer = 200;
         private int playerAttackTimer = 10;
 
-        private int enemyMovementSpeedXCoord = 4;
-        private int enemyMovementSpeedYCoord = 40;
+        public int enemyMovementSpeedXCoord = 4;
+        public int enemyMovementSpeedYCoord = 40;
 
         private float deviceCanvasWidth;
         private float deviceCanvasHeight;
+
+        private float ScreenSizeDelta { get; set; } = 2.7f;
 
         private float smallDeviceCanvasWidth = 1100;
         private float smallDeviceCanvasHeight = 2222;
 
         public event EventHandler TickEvent;
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public bool DirectionLeft { get; set; } = true;
 
@@ -98,12 +99,33 @@ namespace SpaceInvaders.ViewModel
 
             if (screenWidth > 1200)
             {
-                enemyMovementSpeedXCoord = 10;
+                enemyMovementSpeedXCoord = 8;
                 enemyMovementSpeedYCoord = 100;
                 State.MediumEnemySpeedXCoord = 14;
                 State.MediumEnemySpeedYCoord = 120;
                 State.LargeEnemySpeedXCoord = 25;
                 State.LargeEnemySpeedYCoord = 140;
+                CurrentScore = 88888;
+            }
+        }
+
+        private void ResetScreenSpeeds()
+        {
+            // Get the screen metrics
+            var metrics = DeviceDisplay.MainDisplayInfo;
+
+            // Access the screen size properties
+            double screenWidth = metrics.Width;
+
+            if (screenWidth > 1200)
+            {
+                enemyMovementSpeedXCoord = 8;
+                enemyMovementSpeedYCoord = 100;
+            }
+            else
+            {
+                enemyMovementSpeedXCoord = 4;
+                enemyMovementSpeedYCoord = 40;
             }
         }
 
@@ -162,6 +184,7 @@ namespace SpaceInvaders.ViewModel
             if (!State.IsPlaying)
             {
                 aTimer.Stop();
+                ResetScreenSpeeds();
 
                 player.playerXcord = 500;
                 player.playerYcord = 1750;
@@ -183,7 +206,6 @@ namespace SpaceInvaders.ViewModel
             }
         }
 
-
         internal void StartGame()
         {
             SetLevelNumber();
@@ -200,6 +222,7 @@ namespace SpaceInvaders.ViewModel
 
             State.IsPlaying = true;
 
+            ResetScreenSpeeds();
             CreateGameAnimations();
 
             SetTimer();
@@ -500,10 +523,7 @@ namespace SpaceInvaders.ViewModel
                     // reset spawn timer
                     enemyShotTimer = 0;
                 }
-                catch
-                {
-                    Debug.WriteLine("CATCHCATCHCATCHCATCHCATCHCATCHCATCHCATCHCATCH");
-                }
+                catch {}
             }
         }
 
@@ -585,18 +605,10 @@ namespace SpaceInvaders.ViewModel
             State.GameOver = true;
         }
 
-        // Go Left
-        [RelayCommand]
-        private void MovePlayerLeft()
-        {
-            player.playerXcord -= 100;
-        }
 
-        // Go Right
-        [RelayCommand]
-        private void MovePlayerRight()
+        public void MovePlayerSwipe(float deltaX)
         {
-            player.playerXcord += 100;
+            player.playerXcord = deltaX * ScreenSizeDelta;
         }
 
         // Fire
@@ -609,6 +621,6 @@ namespace SpaceInvaders.ViewModel
             }
 
             playerAttackTimer = 5;
-        }
+        }        
     }
 }
