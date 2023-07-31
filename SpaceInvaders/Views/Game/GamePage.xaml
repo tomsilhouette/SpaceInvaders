@@ -50,18 +50,7 @@
         </VerticalStackLayout>
 
         <Grid VerticalOptions="End" ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="10">
-            
-            <Button
-                    x:Name="LeftButton"
-                    Text="Left"
-                    TextColor="White"
-                    Grid.Column="0"
-                    FontSize="22"
-                    BackgroundColor="BlueViolet"
-                    Command="{Binding MovePlayerLeftCommand}"
-                    SemanticProperties.Hint="Go Left"
-                    HeightRequest="75"/>
-            
+
             <Button
                     x:Name="FireButton"
                     Text="Fire"
@@ -73,16 +62,6 @@
                     SemanticProperties.Hint="Fire Weapons"
                     HeightRequest="75" />
 
-            <Button
-                    x:Name="RightButton"
-                    Text="Right"
-                    TextColor="White"
-                    FontSize="22"
-                    Grid.Column="2"
-                    Command="{Binding MovePlayerRightCommand}"
-                    BackgroundColor="BlueViolet"
-                    SemanticProperties.Hint="Go Right"
-                    HeightRequest="75" />
         </Grid>
 
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
@@ -97,5 +76,6 @@
                 HorizontalOptions="Center" />
 
         </StackLayout>
+        
     </Grid>
 </ContentPage>

@@ -60,11 +60,13 @@ namespace SpaceInvaders.ViewModel
         private int enemyShipTimer = 200;
         private int playerAttackTimer = 10;
 
-        private int enemyMovementSpeedXCoord = 4;
-        private int enemyMovementSpeedYCoord = 40;
+        public int enemyMovementSpeedXCoord = 4;
+        public int enemyMovementSpeedYCoord = 40;
 
         private float deviceCanvasWidth;
         private float deviceCanvasHeight;
+
+        private float screenSizeDelta { get; set; } = 2.7f;
 
         private float smallDeviceCanvasWidth = 1100;
         private float smallDeviceCanvasHeight = 2222;
@@ -104,6 +106,26 @@ namespace SpaceInvaders.ViewModel
                 State.MediumEnemySpeedYCoord = 120;
                 State.LargeEnemySpeedXCoord = 25;
                 State.LargeEnemySpeedYCoord = 140;
+            }
+        }
+
+        private void ResetScreenSpeeds()
+        {
+            // Get the screen metrics
+            var metrics = DeviceDisplay.MainDisplayInfo;
+
+            // Access the screen size properties
+            double screenWidth = metrics.Width;
+
+            if (screenWidth > 1200)
+            {
+                enemyMovementSpeedXCoord = 10;
+                enemyMovementSpeedYCoord = 100;
+            }
+            else
+            {
+                enemyMovementSpeedXCoord = 4;
+                enemyMovementSpeedYCoord = 40;
             }
         }
 
@@ -162,6 +184,7 @@ namespace SpaceInvaders.ViewModel
             if (!State.IsPlaying)
             {
                 aTimer.Stop();
+                ResetScreenSpeeds();
 
                 player.playerXcord = 500;
                 player.playerYcord = 1750;
@@ -200,6 +223,7 @@ namespace SpaceInvaders.ViewModel
 
             State.IsPlaying = true;
 
+            ResetScreenSpeeds();
             CreateGameAnimations();
 
             SetTimer();
@@ -585,24 +609,12 @@ namespace SpaceInvaders.ViewModel
             State.GameOver = true;
         }
 
-        // Go Left
-        [RelayCommand]
-        private void MovePlayerLeft()
-        {
-            player.playerXcord -= 100;
-        }
-
-        // Go Right
-        [RelayCommand]
-        private void MovePlayerRight()
-        {
-            player.playerXcord += 100;
-        }
 
         public void MovePlayerSwipe(float deltaX)
         {
-            player.playerXcord = deltaX * 5;
+            player.playerXcord = deltaX * screenSizeDelta;
         }
+
         // Fire
         [RelayCommand]
         private void FirePlayerWeapon()
@@ -613,6 +625,6 @@ namespace SpaceInvaders.ViewModel
             }
 
             playerAttackTimer = 5;
-        }
+        }        
     }
 }
