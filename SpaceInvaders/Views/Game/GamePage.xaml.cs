@@ -65,6 +65,7 @@ public partial class GamePage : ContentPage
                 
                 ViewModel.MovePlayerSwipe( deltaX );
                 break;
+
         }
 
         e.Handled = true; // Set this to true if you've handled the touch event

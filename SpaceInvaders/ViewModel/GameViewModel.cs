@@ -66,13 +66,12 @@ namespace SpaceInvaders.ViewModel
         private float deviceCanvasWidth;
         private float deviceCanvasHeight;
 
-        private float screenSizeDelta { get; set; } = 2.7f;
+        private float ScreenSizeDelta { get; set; } = 2.7f;
 
         private float smallDeviceCanvasWidth = 1100;
         private float smallDeviceCanvasHeight = 2222;
 
         public event EventHandler TickEvent;
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public bool DirectionLeft { get; set; } = true;
 
@@ -100,12 +99,13 @@ namespace SpaceInvaders.ViewModel
 
             if (screenWidth > 1200)
             {
-                enemyMovementSpeedXCoord = 10;
+                enemyMovementSpeedXCoord = 8;
                 enemyMovementSpeedYCoord = 100;
                 State.MediumEnemySpeedXCoord = 14;
                 State.MediumEnemySpeedYCoord = 120;
                 State.LargeEnemySpeedXCoord = 25;
                 State.LargeEnemySpeedYCoord = 140;
+                CurrentScore = 88888;
             }
         }
 
@@ -119,7 +119,7 @@ namespace SpaceInvaders.ViewModel
 
             if (screenWidth > 1200)
             {
-                enemyMovementSpeedXCoord = 10;
+                enemyMovementSpeedXCoord = 8;
                 enemyMovementSpeedYCoord = 100;
             }
             else
@@ -205,7 +205,6 @@ namespace SpaceInvaders.ViewModel
                 }
             }
         }
-
 
         internal void StartGame()
         {
@@ -524,10 +523,7 @@ namespace SpaceInvaders.ViewModel
                     // reset spawn timer
                     enemyShotTimer = 0;
                 }
-                catch
-                {
-                    Debug.WriteLine("CATCHCATCHCATCHCATCHCATCHCATCHCATCHCATCHCATCH");
-                }
+                catch {}
             }
         }
 
@@ -612,7 +608,7 @@ namespace SpaceInvaders.ViewModel
 
         public void MovePlayerSwipe(float deltaX)
         {
-            player.playerXcord = deltaX * screenSizeDelta;
+            player.playerXcord = deltaX * ScreenSizeDelta;
         }
 
         // Fire
