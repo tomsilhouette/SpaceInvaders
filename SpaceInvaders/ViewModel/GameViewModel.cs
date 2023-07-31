@@ -60,16 +60,15 @@ namespace SpaceInvaders.ViewModel
         private int enemyShipTimer = 200;
         private int playerAttackTimer = 10;
 
-        public int enemyMovementSpeedXCoord = 4;
-        public int enemyMovementSpeedYCoord = 40;
+        public int enemyMovementSpeedXCoord = 6;
+        public int enemyMovementSpeedYCoord = 50;
 
         private float deviceCanvasWidth;
         private float deviceCanvasHeight;
 
-        private float ScreenSizeDelta { get; set; } = 2.7f;
+        // private float ScreenSizeDelta { get; set; } = 2.7f;
 
-        private float smallDeviceCanvasWidth = 1100;
-        private float smallDeviceCanvasHeight = 2222;
+        private readonly float SmallDeviceCanvasWidth = 1100;
 
         public event EventHandler TickEvent;
 
@@ -95,11 +94,10 @@ namespace SpaceInvaders.ViewModel
 
             // Access the screen size properties
             double screenWidth = metrics.Width;
-            double screenHeight = metrics.Height;
 
             if (screenWidth > 1200)
             {
-                enemyMovementSpeedXCoord = 8;
+                enemyMovementSpeedXCoord = 10;
                 enemyMovementSpeedYCoord = 100;
                 State.MediumEnemySpeedXCoord = 14;
                 State.MediumEnemySpeedYCoord = 120;
@@ -118,12 +116,12 @@ namespace SpaceInvaders.ViewModel
 
             if (screenWidth > 1200)
             {
-                enemyMovementSpeedXCoord = 8;
+                enemyMovementSpeedXCoord = 12;
                 enemyMovementSpeedYCoord = 100;
             }
             else
             {
-                enemyMovementSpeedXCoord = 4;
+                enemyMovementSpeedXCoord = 6;
                 enemyMovementSpeedYCoord = 40;
             }
         }
@@ -228,7 +226,7 @@ namespace SpaceInvaders.ViewModel
 
         internal void SetDeviceSizes()
         {
-            if (deviceCanvasWidth > smallDeviceCanvasWidth)
+            if (deviceCanvasWidth > SmallDeviceCanvasWidth)
             {
                 player.playerYcord = deviceCanvasHeight - (deviceCanvasHeight / 9.0f);
             }

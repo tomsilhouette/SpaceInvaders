@@ -99,14 +99,6 @@
                     Clicked="ShowHighScores_Clicked"
                     HorizontalOptions="Center" />
 
-                <Button
-                    x:Name="Upgrades"
-                    Text="Upgrades"
-                    Margin="0,10,0,0"
-                    FontAttributes="Bold"
-                    SemanticProperties.Hint="Go to upgrades"
-                    Clicked="Upgrades_Clicked"
-                    HorizontalOptions="Center" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
 
