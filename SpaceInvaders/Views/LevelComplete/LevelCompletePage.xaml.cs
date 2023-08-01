@@ -18,11 +18,6 @@ public partial class LevelCompletePage : ContentPage
         LevelTotalScoreContainer.Text = State.FinishingScore.ToString();
     }
 
-    private async void UpgradesButton_Clicked(object sender, EventArgs e)
-    {
-        await AppShell.Current.GoToAsync("///UpgradesPage");
-    }
-
     private async void NextLevelButton_Clicked(object sender, EventArgs e)
     {
         State.EndOfLevelScore = 0;

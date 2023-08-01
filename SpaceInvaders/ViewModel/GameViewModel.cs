@@ -61,7 +61,7 @@ namespace SpaceInvaders.ViewModel
         private int playerAttackTimer = 10;
 
         public int enemyMovementSpeedXCoord = 6;
-        public int enemyMovementSpeedYCoord = 50;
+        public int enemyMovementSpeedYCoord = 40;
 
         private float deviceCanvasWidth;
         private float deviceCanvasHeight;

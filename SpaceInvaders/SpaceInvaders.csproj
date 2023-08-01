@@ -151,6 +151,7 @@
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionSpaceInvadersHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
+	<!--
 	<PropertyGroup Condition="$(TargetFramework.Contains('-android')) and '$(Configuration)' == 'Release'">
 		<AndroidKeyStore>True</AndroidKeyStore>
 		<AndroidSigningKeyStore>../key.keystore</AndroidSigningKeyStore>
@@ -158,5 +159,7 @@
 		<AndroidSigningKeyAlias>MauiAlias</AndroidSigningKeyAlias>
 		<AndroidSigningKeyPass>abcdefg</AndroidSigningKeyPass>
 	</PropertyGroup>
+	-->
+
 
 </Project>
