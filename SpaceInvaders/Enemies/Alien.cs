@@ -13,7 +13,8 @@ namespace SpaceInvaders.Enemies
         public int Y { get; set; }
         public float attackXpos { get; set; }
         public float attackYpos { get; set; }
-        public string AlienImagePath { get; set; } = "enemyAlien.png";
+        public string AlienImagePath { get; set; } = "alien1.png";
+        public string AlienSecondImagePath { get; set; } = "alien2.png";
         public string AlienAttackImagePath { get; set; } = "enemy_attack.png";
         public int ScorePerKill { get; } = 10;
 

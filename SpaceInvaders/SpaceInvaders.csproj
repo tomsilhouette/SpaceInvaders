@@ -39,6 +39,8 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Remove="Resources\Images\alien1.png" />
+		<MauiImage Remove="Resources\Images\alien2.png" />
 		<MauiImage Remove="Resources\Images\barrier.png" />
 		<MauiImage Remove="Resources\Images\enemyAlien.png" />
 		<MauiImage Remove="Resources\Images\enemyShip.png" />
@@ -87,6 +89,12 @@
 		<MauiAsset Include="Resources\Audio\shoot.wav">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</MauiAsset>
+		<EmbeddedResource Include="Resources\Images\alien1.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Resources\Images\alien2.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
 		<EmbeddedResource Include="Resources\Images\enemy_attack.png" />
 		<EmbeddedResource Include="Resources\Images\barrier.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -151,7 +159,7 @@
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionSpaceInvadersHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
-	<!--
+
 	<PropertyGroup Condition="$(TargetFramework.Contains('-android')) and '$(Configuration)' == 'Release'">
 		<AndroidKeyStore>True</AndroidKeyStore>
 		<AndroidSigningKeyStore>../key.keystore</AndroidSigningKeyStore>
@@ -159,7 +167,6 @@
 		<AndroidSigningKeyAlias>MauiAlias</AndroidSigningKeyAlias>
 		<AndroidSigningKeyPass>abcdefg</AndroidSigningKeyPass>
 	</PropertyGroup>
-	-->
 
 
 </Project>

@@ -44,6 +44,7 @@ namespace SpaceInvaders.ViewModel
         private SKBitmap playerBitmap;
         private SKBitmap enemyAlienBitmap;
         private SKBitmap enemyShipBitmap;
+        private SKBitmap enemyAlienArmsUpBitmap;
         private SKBitmap enemyAlienAttackBitmap;
         private SKBitmap explosionBitmap;
 
@@ -59,8 +60,9 @@ namespace SpaceInvaders.ViewModel
         private int enemyShotTimer = 50;
         private int enemyShipTimer = 200;
         private int playerAttackTimer = 10;
+        private int armTimer = 30;
 
-        public int enemyMovementSpeedXCoord = 6;
+        public int enemyMovementSpeedXCoord = 5;
         public int enemyMovementSpeedYCoord = 40;
 
         private float deviceCanvasWidth;
@@ -121,7 +123,7 @@ namespace SpaceInvaders.ViewModel
             }
             else
             {
-                enemyMovementSpeedXCoord = 6;
+                enemyMovementSpeedXCoord = 5;
                 enemyMovementSpeedYCoord = 40;
             }
         }
@@ -145,8 +147,12 @@ namespace SpaceInvaders.ViewModel
             explosionBitmap = SKBitmap.Decode(explosionStream).Resize(new SKImageInfo(800, 800), SKFilterQuality.Low);
 
             // Add enemy aliens
-            using var alienStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}enemyAlien.png");
-            enemyAlienBitmap = SKBitmap.Decode(alienStream);
+            using var alienStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}alien1.png");
+            enemyAlienBitmap = SKBitmap.Decode(alienStream).Resize(new SKImageInfo(680, 570), SKFilterQuality.Low);
+
+            // Add enemy aliens
+            using var alienArmsUpStream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"{imageSource}alien2.png");
+            enemyAlienArmsUpBitmap = SKBitmap.Decode(alienArmsUpStream).Resize(new SKImageInfo(680, 570), SKFilterQuality.Low);
         }
 
         public void SetDeviceDimensions()
@@ -177,6 +183,7 @@ namespace SpaceInvaders.ViewModel
             enemyShotTimer++;
             enemyShipTimer++;
             playerAttackTimer--;
+            armTimer--;
 
             if (!State.IsPlaying)
             {
@@ -215,6 +222,7 @@ namespace SpaceInvaders.ViewModel
             enemyShotTimer = 50;
             enemyShipTimer = 200;
             enemyAlienCount = 1;
+            armTimer = 30;
 
             State.IsPlaying = true;
 
@@ -352,9 +360,21 @@ namespace SpaceInvaders.ViewModel
                         }
                     }
 
-                    var alienPos = mat.Invert().MapPoint(alien.X, alien.Y);
-                    gameCanvas.DrawBitmap(enemyAlienBitmap, alienPos, new SKPaint());
+                    if (armTimer > 15)
+                    {
+                        var alienPos = mat.Invert().MapPoint(alien.X, alien.Y);
+                        gameCanvas.DrawBitmap(enemyAlienBitmap, alienPos, new SKPaint());
+                    }
+                    else
+                    {
+                        var alienPos = mat.Invert().MapPoint(alien.X, alien.Y);
+                        gameCanvas.DrawBitmap(enemyAlienArmsUpBitmap, alienPos, new SKPaint());
+                    }
 
+                    if (armTimer == 0)
+                    {
+                        armTimer = 30;
+                    }
 
                     var alienRect = mat.Invert().MapRect(new SKRect(alien.X, alien.Y, alien.X + 150, alien.Y + 100));
                     gameCanvas.DrawRect(alienRect, new SKPaint()
