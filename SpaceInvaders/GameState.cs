@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Timers;
-
-namespace SpaceInvaders
+﻿namespace SpaceInvaders
 {
     public class GameState
     {

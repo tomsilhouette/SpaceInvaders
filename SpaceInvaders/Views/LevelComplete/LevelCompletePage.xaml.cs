@@ -24,4 +24,9 @@ public partial class LevelCompletePage : ContentPage
         State.CurrentLevel++;
         await AppShell.Current.GoToAsync("///GamePage");
     }
+
+    private async void UpgradesPageButton_Clicked(object sender, EventArgs e)
+    {
+        await AppShell.Current.GoToAsync("///UpgradesPage");
+    }
 }

@@ -31,7 +31,7 @@ public static class MauiProgram
             });
 
 		builder.Services.AddSingleton<Database>();
-		builder.Services.AddSingleton(AudioManager.Current);
+		// builder.Services.AddSingleton(AudioManager.Current);
 		builder.Services.AddSingleton<GameState>();
 		builder.Services.AddSingleton<GameOverViewModel>();
 		builder.Services.AddSingleton<Player.Player>();
@@ -42,7 +42,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<UpgradesPage>();
 		builder.Services.AddSingleton<UpgradesViewModel>();
 		builder.Services.AddSingleton<GameOverPage>();
-		builder.Services.AddSingleton<Laser>();
+		//builder.Services.AddSingleton<Laser>();
 		builder.Services.AddSingleton<GameViewModel>();
 		builder.Services.AddSingleton<HighScoresViewModel>();
 		builder.Services.AddSingleton<MainPageViewModel>();

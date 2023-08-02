@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 
 namespace SpaceInvaders.Enemies
 {
-    public class Alien : IEnemy
+    public class Alien
     {
         public int EnemyNumber { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public float attackXpos { get; set; }
-        public float attackYpos { get; set; }
-        public string AlienImagePath { get; set; } = "alien1.png";
-        public string AlienSecondImagePath { get; set; } = "alien2.png";
-        public string AlienAttackImagePath { get; set; } = "enemy_attack.png";
+/*        public float attackXpos { get; set; }
+        public float attackYpos { get; set; }*/
         public int ScorePerKill { get; } = 10;
 
         public Alien(int enemyNumber, int x, int y)

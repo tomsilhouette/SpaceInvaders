@@ -15,6 +15,8 @@ public partial class GamePage : ContentPage
 
     readonly int[] randomNumbers = new int[6];
 
+    public bool SizesSet { get; set; } = false;
+
     public GamePage(GameViewModel viewModel, GameState state)
 	{
 		InitializeComponent();
@@ -34,6 +36,10 @@ public partial class GamePage : ContentPage
         }
     }
 
+    protected override void OnDisappearing()
+    {
+        SizesSet = false;
+    }
     // Init canvas
     private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
     {
@@ -43,8 +49,15 @@ public partial class GamePage : ContentPage
 
         canvas.Clear();
         ViewModel.SetCanvas(canvas);
-        ViewModel.SetDeviceDimensions();
-        DrawBackground(canvas, new SKPoint((float)canvasView.Width / 2.0f, 128), new SKPoint((float)canvasView.Width / 2.0f, 16));
+        
+        // TODO
+        if (!SizesSet)
+        {
+            ViewModel.SetDeviceDimensions();
+            SizesSet = true;
+        }
+        
+        DrawBackground(canvas, new SKPoint((float)canvasView.Width / 2.0f, 128), new SKPoint((float)canvasView.Width / 2.0f, 16)); 
 
         ViewModel.DrawGame();
     }

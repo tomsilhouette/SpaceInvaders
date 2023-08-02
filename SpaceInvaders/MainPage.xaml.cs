@@ -11,23 +11,21 @@ public partial class MainPage : ContentPage
     // private bool isMainMusicPlaying = false;
 
     // Instance of audioPlayer
-    private IAudioManager audioManager;
+    // private IAudioManager audioManager;
 
     private MainPageViewModel ViewModel;
 
-    public MainPage(IAudioManager audioManager, MainPageViewModel vm)
+    // public MainPage(IAudioManager audioManager, MainPageViewModel vm)
+    public MainPage(MainPageViewModel vm)
 	{
 		InitializeComponent();
         // this.audioManager = audioManager;
-
         BindingContext = ViewModel = vm;
     }
 
     protected override void OnAppearing()
     {
-        Debug.WriteLine("OOOONNNNNNN APPPPEAAARRRRIIING");
         _ = Task.Run(ViewModel.Initialise);
-
         // Check music is not already playing on page loading
         // Otherwise it will play multiple times at once
 /*        if (!isMainMusicPlaying)

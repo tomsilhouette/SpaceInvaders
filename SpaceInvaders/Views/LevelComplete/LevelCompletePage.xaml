@@ -40,8 +40,17 @@
             HorizontalOptions="Center"
             FontSize="44"/>
 
-        <HorizontalStackLayout HorizontalOptions="Center" Margin="0,25,0,0">
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,25,0,0">
 
+            <Button
+                x:Name="UpgradesPageButton"
+                Text="Upgrade"
+                IsEnabled="False"
+                WidthRequest="140"
+                SemanticProperties.Hint="View upgrades available"
+                Clicked="UpgradesPageButton_Clicked"
+                HorizontalOptions="Center" />            
+            
             <Button
                 x:Name="NextLevelButton"
                 Text="Next"

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpaceInvaders.Enemies
+﻿namespace SpaceInvaders.Enemies
 {
-    public class Ship : IEnemy
+    public class Ship
     {
         // Set to come in screen from left to right
         public int X { get; set; } = 0;
