@@ -19,8 +19,8 @@
 		<ApplicationIdGuid>92c1d8a0-1f92-47d8-b2fc-6255cc544555</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>2.0</ApplicationDisplayVersion>
-		<ApplicationVersion>2</ApplicationVersion>
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
@@ -41,12 +41,10 @@
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Remove="Resources\Images\alien1.png" />
 		<MauiImage Remove="Resources\Images\alien2.png" />
-		<MauiImage Remove="Resources\Images\barrier.png" />
 		<MauiImage Remove="Resources\Images\enemyAlien.png" />
 		<MauiImage Remove="Resources\Images\enemyShip.png" />
 		<MauiImage Remove="Resources\Images\enemy_attack.png" />
 		<MauiImage Remove="Resources\Images\player.png" />
-		<MauiImage Remove="Resources\Images\tnt.png" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -66,14 +64,12 @@
 	  <None Remove="Resources\Audio\main_music.mpeg" />
 	  <None Remove="Resources\Audio\shoot.wav" />
 	  <None Remove="Resources\Fonts\SegoeIcons.ttf" />
-	  <None Remove="Resources\Images\barrier.png" />
 	  <None Remove="Resources\Images\enemyAlien.png" />
 	  <None Remove="Resources\Images\enemyShip.png" />
 	  <None Remove="Resources\Images\heart.png" />
 	  <None Remove="Resources\Images\laser.png" />
 	  <None Remove="Resources\Images\player.png" />
 	  <None Remove="Resources\Images\space_invader1.png" />
-	  <None Remove="Resources\Images\tnt.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -96,16 +92,10 @@
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
 		<EmbeddedResource Include="Resources\Images\enemy_attack.png" />
-		<EmbeddedResource Include="Resources\Images\barrier.png">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</EmbeddedResource>
 		<EmbeddedResource Include="Resources\Images\enemyAlien.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
 		<EmbeddedResource Include="Resources\Images\enemyShip.png">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Images\tnt.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
 	</ItemGroup>

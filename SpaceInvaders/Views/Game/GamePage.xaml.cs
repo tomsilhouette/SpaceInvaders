@@ -9,7 +9,7 @@ namespace SpaceInvaders.Views.Game;
 
 public partial class GamePage : ContentPage
 {
-    Random random = new Random();
+    Random random = new();
     private GameViewModel ViewModel { get; set; }
     public GameState State { get; set; }
 
@@ -32,7 +32,14 @@ public partial class GamePage : ContentPage
 
         for (int i = 0; i < randomNumbers.Length; i++)
         {
-            randomNumbers[i] = (byte)random.Next(256);
+            if (i == 1)
+            {
+                randomNumbers[i] = (byte)random.Next(160);
+            }
+            else
+            {
+                randomNumbers[i] = (byte)random.Next(256);
+            }
         }
     }
 
@@ -68,20 +75,4 @@ public partial class GamePage : ContentPage
         BackgroundGenerator bgGen = new();
         bgGen.GenBg(State.CurrentLevel, canvas, start, end, randomNumbers);
     }
-
-/*    private void CanvasView_Touch(object sender, SKTouchEventArgs e)
-    {
-        switch (e.ActionType)
-        {
-            case SKTouchAction.Moved:
-                float deltaX = e.Location.X;
-                
-                ViewModel.MovePlayerSwipe( deltaX );
-                break;
-
-        }
-
-        e.Handled = true; // Set this to true if you've handled the touch event
-        canvasView.InvalidateSurface(); // Redraw the canvas if needed
-    }*/
 }
